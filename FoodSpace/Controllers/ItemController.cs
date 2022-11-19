@@ -38,6 +38,7 @@ namespace FoodSpace.Controllers
             {
                 _db.Items.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category Created Successfully";
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going ot antoher controller
             }
             return View(obj);
@@ -73,6 +74,7 @@ namespace FoodSpace.Controllers
             {
                 _db.Items.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category Edited Successfully";
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going ot antoher controller
             }
             return View(obj);
@@ -107,6 +109,7 @@ namespace FoodSpace.Controllers
 
             _db.Items.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category Deleted Successfully";
             return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller
         }
     }
