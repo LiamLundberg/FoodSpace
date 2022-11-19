@@ -2,9 +2,9 @@
 
 <div class="row">
     <div class="col-md-4">
-        @*<div asp-validation-summary="All"></div>*@
-        <form method="post" asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -16,7 +16,7 @@
                 <span asp-validation-for="DisplayOrder" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <Button type="submit" class="btn btn-primary" style="width:150px">Create</Button>
+                <Button type="submit" class="btn btn-primary" style="width:150px">Edit</Button>
                 <a asp-controller="Item" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
             </div>
         </form>
