@@ -19,5 +19,11 @@ namespace FoodSpace.Controllers
 
             return View(objItemList);
         }
+
+        public IActionResult Create()
+        {
+            
+            return View();
+        }
     }
 }
