@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using FoodSpace.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodSpace.Data
@@ -9,5 +10,7 @@ namespace FoodSpace.Data
             : base(options)
         {
         }
+
+        public DbSet<Item> Items { get; set; }
     }
 }
