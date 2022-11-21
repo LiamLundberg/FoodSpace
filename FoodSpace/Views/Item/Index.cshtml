@@ -36,21 +36,21 @@
                 Protien (per 100g)
             </th>
             <th>
-                Carbs (per 100g)
+                Fat (per 100g)
             </th>
             <th>
-                Fat (per 100g)
+                Carbs (per 100g)
             </th>
         </tr>
     </thead>
-    <tbody>
+    <tbody mb-200px>
         @foreach(var obj in Model){
             <tr>
                 <td>
                     @obj.Name
                 </td>
                 <td>
-                    @obj.ServingSizeDesc
+                    @obj.ServingDesc
                 </td>
                 <td>
                     @obj.ServingSize
@@ -73,4 +73,5 @@
             </tr>
         }
     </tbody>
+
 </table>
