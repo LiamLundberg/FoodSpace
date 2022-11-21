@@ -24,19 +24,22 @@
     <thead>
         <tr>
             <th>
-                Item Name
+                Name
             </th>
             <th>
-                Display Order
+                Serving Desc
             </th>
             <th>
-                Protien
+                Serving (grams)
             </th>
             <th>
-                Carbs
+                Protien (per 100g)
             </th>
             <th>
-                Fat
+                Carbs (per 100g)
+            </th>
+            <th>
+                Fat (per 100g)
             </th>
         </tr>
     </thead>
@@ -47,16 +50,19 @@
                     @obj.Name
                 </td>
                 <td>
-                    @obj.DisplayOrder
+                    @obj.ServingSizeDesc
+                </td>
+                <td>
+                    @obj.ServingSize
                 </td>
                 <td>
                     @obj.Protein
                 </td>
                 <td>
-                    @obj.Carbohydrates
+                    @obj.Fat
                 </td>
                 <td>
-                    @obj.Fat
+                    @obj.Carbohydrates
                 </td>
                 <td>
                     <div class="btn-group" role="group" style="max-width:70px">

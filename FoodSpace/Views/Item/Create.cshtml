@@ -11,9 +11,14 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="DisplayOrder" class="control-label"></label>
-                <input asp-for="DisplayOrder" class="form-control" />
-                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                <label asp-for="ServingSizeDesc" class="control-label"></label>
+                <input asp-for="ServingSizeDesc" class="form-control" />
+                <span asp-validation-for="ServingSizeDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ServingSize" class="control-label"></label>
+                <input asp-for="ServingSize" class="form-control" />
+                <span asp-validation-for="ServingSize" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Protein" class="control-label"></label>
@@ -21,14 +26,14 @@
                 <span asp-validation-for="Protein" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Carbohydrates" class="control-label"></label>
-                <input asp-for="Carbohydrates" class="form-control" />
-                <span asp-validation-for="Carbohydrates" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
                 <label asp-for="Fat" class="control-label"></label>
                 <input asp-for="Fat" class="form-control" />
                 <span asp-validation-for="Fat" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Carbohydrates" class="control-label"></label>
+                <input asp-for="Carbohydrates" class="form-control" />
+                <span asp-validation-for="Carbohydrates" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <Button type="submit" class="btn btn-primary" style="width:150px">Create</Button>
