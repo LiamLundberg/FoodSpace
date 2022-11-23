@@ -1,6 +1,8 @@
 ﻿using FoodSpace.Data;
 using FoodSpace.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FoodSpace.Controllers
 {
@@ -11,13 +13,80 @@ namespace FoodSpace.Controllers
         public ItemController(ApplicationDbContext db)
         {
             _db = db;
+            
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder)
         {
-            IEnumerable<Item> objItemList = _db.Items;
+            IEnumerable<Item> objItemList = _db.Items.OrderBy(x => x.Name);
+
+            if (sortOrder.IsNullOrEmpty())
+            {
+                objItemList = _db.Items.OrderBy(x => x.Name);
+            }
+            else
+            {
+                switch (sortOrder)
+            {
+                case "nameSort":
+                    if (TempData["sort"] == null || TempData["sort"].Equals("asc"))
+                    {
+                        objItemList = _db.Items.OrderBy(x => x.Name);
+                        TempData["sort"] = "desc";
+                    }
+                    else
+                    {
+                        objItemList = _db.Items.OrderByDescending(x => x.Name);
+                        TempData["sort"] = "asc";
+                    }
+
+                    break;
+                case "proteinSort":
+                    if (TempData["sort"] == null || TempData["sort"].Equals("asc") )
+                    {
+                        objItemList = _db.Items.OrderBy(x => x.Protein);
+                        TempData["sort"] = "desc";
+                    }
+                    else
+                    {
+                        objItemList = _db.Items.OrderByDescending(x => x.Protein);
+                        TempData["sort"] = "asc";
+                    }
+
+                    break;
+                case "fatSort":
+                    if (TempData["sort"] == null || TempData["sort"].Equals("asc"))
+                    {
+                        objItemList = _db.Items.OrderBy(x => x.Fat);
+                        TempData["sort"] = "desc";
+                    }
+                    else
+                    {
+                        objItemList = _db.Items.OrderByDescending(x => x.Fat);
+                        TempData["sort"] = "asc";
+                    }
+
+                    break;
+                case "carbSort":
+                    if (TempData["sort"] == null || TempData["sort"].Equals("asc"))
+                    {
+                        objItemList = _db.Items.OrderBy(x => x.Carbohydrates);
+                        TempData["sort"] = "desc";
+                    }
+                    else
+                    {
+                        objItemList = _db.Items.OrderByDescending(x => x.Carbohydrates);
+                        TempData["sort"] = "asc";
+                    }
+                        
+                    break;
+            }
+            }
+
+            
 
             return View(objItemList);
+
         }
 
         public IActionResult Create()
@@ -29,7 +98,7 @@ namespace FoodSpace.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Item obj)
         {
-            if(obj.Name == obj.DisplayOrder.ToString())
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("Name", "Display Order Cannot exactly match name");
                 ModelState.AddModelError("DisplayOrder", "Display Order Cannot exactly match name");
@@ -41,11 +110,9 @@ namespace FoodSpace.Controllers
                 TempData["success"] = "Category Created Successfully";
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going ot antoher controller
             }
-
-        public IActionResult Create()
-        {
-            return View();
+            return View(obj);
         }
+
 
         public IActionResult Edit(int? id)
         {
