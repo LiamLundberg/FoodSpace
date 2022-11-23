@@ -41,7 +41,10 @@ namespace FoodSpace.Controllers
                 TempData["success"] = "Category Created Successfully";
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going ot antoher controller
             }
-            return View(obj);
+
+        public IActionResult Create()
+        {
+            return View();
         }
 
         public IActionResult Edit(int? id)
