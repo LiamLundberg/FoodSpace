@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DynamicRecipe>
+
+
+<h1>Recipe Index</h1>
+
+<partial name="_Notification" />
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2>
+                Item List
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="DynamicRecipe" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create New Recipe
+            </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped" style="width:100%; table-layout: fixed ;">
+    <thead>
+        <tr>
+            <th>
+                <a asp-controller="DynamicRecipe" asp-action="Index" asp-route-sortOrder="nameSort">Recipe</a>
+            </th>
+            <th>
+                Serving Desc
+            </th>
+            <th>
+                Serving (grams)
+            </th>
+            <th>
+                <a asp-controller="DynamicRecipe" asp-action="Index" >Protein (per 100g)</a>
+            </th>
+            <th>
+                <a asp-controller="DynamicRecipe" asp-action="Index">Fat (per 100g)</a>
+            </th>
+            <th>
+                <a asp-controller="DynamicRecipe" asp-action="Index">Carbs (per 100g)</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody mb-200px>
+        @foreach (var obj in Model)
+        {
+            <tr>
+                <td>
+                    @obj.Name
+                </td>
+                <td>
+                    @obj.ServingDesc
+                </td>
+                <td>
+                    @obj.ServingSize
+                </td>
+                <td>
+                    @obj.Protein
+                </td>
+                <td>
+                    @obj.Fat
+                </td>
+                <td>
+                    @obj.Carbohydrates
+                </td>
+                <td>
+                    <div class="btn-group" role="group" style="max-width:70px">
+                        <a asp-controller="DynamicRecipe" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil"></i>Edit</a>
+                        <a asp-controller="DynamicRecipe" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-warning mx-2"><i class="bi bi-trash"></i> Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

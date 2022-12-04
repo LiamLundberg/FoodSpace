@@ -12,5 +12,7 @@ namespace FoodSpace.Data
         }
 
         public DbSet<Item> Items { get; set; }
+
+        public DbSet<DynamicRecipe> DynamicRecipes { get; set; }
     }
 }
