@@ -9,7 +9,7 @@
     <div class="row pt-4">
         <div class="col-6">
             <h2>
-                Item List
+                Recipe List
             </h2>
         </div>
         <div class="col-6 text-end">
@@ -27,19 +27,7 @@
                 <a asp-controller="DynamicRecipe" asp-action="Index" asp-route-sortOrder="nameSort">Recipe</a>
             </th>
             <th>
-                Serving Desc
-            </th>
-            <th>
-                Serving (grams)
-            </th>
-            <th>
-                <a asp-controller="DynamicRecipe" asp-action="Index" >Protein (per 100g)</a>
-            </th>
-            <th>
-                <a asp-controller="DynamicRecipe" asp-action="Index">Fat (per 100g)</a>
-            </th>
-            <th>
-                <a asp-controller="DynamicRecipe" asp-action="Index">Carbs (per 100g)</a>
+                Description
             </th>
         </tr>
     </thead>
@@ -51,19 +39,7 @@
                     @obj.Name
                 </td>
                 <td>
-                    @obj.ServingDesc
-                </td>
-                <td>
-                    @obj.ServingSize
-                </td>
-                <td>
-                    @obj.Protein
-                </td>
-                <td>
-                    @obj.Fat
-                </td>
-                <td>
-                    @obj.Carbohydrates
+                    @obj.Desc
                 </td>
                 <td>
                     <div class="btn-group" role="group" style="max-width:70px">

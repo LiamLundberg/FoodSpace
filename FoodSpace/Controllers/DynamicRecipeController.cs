@@ -29,25 +29,27 @@ namespace FoodSpace.Controllers
             return View();
         }
 
-        // GET: DynamicRecipeController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: DynamicRecipeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(DynamicRecipe obj)
         {
-            try
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("Name", "Display Order Cannot exactly match name");
             }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                _db.DynamicRecipes.Add(obj);
+                _db.SaveChanges();
+                TempData["success"] = "Recipe Created Successfully";
+                return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller
             }
+            return View(obj);
         }
 
         // GET: DynamicRecipeController/Edit/5
@@ -71,25 +73,38 @@ namespace FoodSpace.Controllers
             }
         }
 
-        // GET: DynamicRecipeController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            return View();
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var itemFromDb = _db.DynamicRecipes.Find(id);
+            //var itemFromDbFirst = _db.Items.FirstOrDefault(x => x.Id == id);
+            //var itemFromDBSingle = _db.Items.SingleOrDefault(x => x.Id == id);
+
+            if (itemFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(itemFromDb);
         }
 
-        // POST: DynamicRecipeController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult DeletePOST(int? id)
         {
-            try
+            var obj = _db.DynamicRecipes.Find(id);
+            if (obj == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
+
+            _db.DynamicRecipes.Remove(obj);
+            _db.SaveChanges();
+            TempData["success"] = "Recipe Deleted Successfully";
+            return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller
         }
     }
 }

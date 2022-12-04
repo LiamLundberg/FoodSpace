@@ -1,0 +1,25 @@
+﻿@model FoodSpace.Models.DynamicRecipe
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Delete">
+            <input asp-for="Id" hidden />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" disabled class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <Button type="submit" class="btn btn-danger" style="width:150px">Delete</Button>
+                <a asp-controller="DynamicRecipe" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
