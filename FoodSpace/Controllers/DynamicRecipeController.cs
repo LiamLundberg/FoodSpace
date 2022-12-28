@@ -18,7 +18,7 @@ namespace FoodSpace.Controllers
         // GET: DynamicRecipeController
         public IActionResult Index()
         {
-            IEnumerable<DynamicRecipe> objItemList = _db.DynamicRecipes.OrderBy(x => x.Name);
+            IEnumerable<Recipe> objItemList = _db.DynamicRecipes.OrderBy(x => x.Name);
 
             return View(objItemList);
         }
@@ -36,7 +36,7 @@ namespace FoodSpace.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(DynamicRecipe obj)
+        public IActionResult Create(Recipe obj)
         {
             if (obj.Name == obj.DisplayOrder.ToString())
             {

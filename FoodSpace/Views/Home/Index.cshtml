@@ -2,7 +2,23 @@
     ViewData["Title"] = "Home Page";
 }
 
+@model FoodSpace.Data.SearchCriteria
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <form asp-controller="NewItem"  asp-action="Index" method="post">
+        <div class="form-group mb-3">
+
+            <label asp-for="criteria" class="control-label"></label>
+            <input asp-for="criteria" class="form-control" />
+            <span asp-validation-for="criteria" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <Button type="submit" class="btn btn-primary" style="width:150px">Create</Button>
+               <a asp-controller="NewItem" asp-action="Fetch" class="btn btn-secondary" style="width:150px">Submit</a>
+        </div>
+     </form>
+
+    
 </div>

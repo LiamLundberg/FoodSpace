@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace FoodSpace.Models;
 
-    public class DynamicRecipe
+    public class Recipe
     {
         [Key]
         public int Id { get; set; }

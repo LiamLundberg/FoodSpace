@@ -13,7 +13,7 @@ namespace FoodSpace.Controllers
         public ItemController(ApplicationDbContext db)
         {
             _db = db;
-            
+            IList<Item> items = new List<Item>();
         }
 
         public IActionResult Index(string sortOrder)
@@ -181,6 +181,6 @@ namespace FoodSpace.Controllers
             _db.SaveChanges();
             TempData["success"] = "Category Deleted Successfully";
             return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller
-        }
+        }  
     }
 }
