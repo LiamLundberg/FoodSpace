@@ -27,6 +27,15 @@
             <th>
                 Name
             </th>
+            <th>
+                Protein (Grams)
+            </th>
+            <th>
+                Fat (Grams)
+            </th>
+            <th>
+                Carbs (Grams)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +45,27 @@
                 <td>
                     @obj.description
                 </td>
+                @foreach (var objItem in obj.foodNutrients)
+                {
+                    if(objItem.nutrientName == "Protein")
+                    {
+                        <td>
+                            @objItem.value
+                        </td>
+                    }
+                    if (objItem.nutrientName == "Total lipid (fat)")
+                    {
+                        <td>
+                            @objItem.value
+                        </td>
+                    }
+                    if (objItem.nutrientName == "Carbohydrate, by difference") 
+                   {
+                        <td>
+                            @objItem.value
+                        </td>
+                    }
+                }
             </tr>
         }
     </tbody>

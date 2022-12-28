@@ -22,5 +22,13 @@ namespace FoodSpace.Models
     {
         public int fdcID { get; set; }
         public string description { get; set; }
+        public foodNutrients[] foodNutrients { get; set; }
+    }
+
+    public class foodNutrients
+    {
+        public string nutrientName { get; set; }
+        public string unitName { get; set; }
+        public float value { get; set; }
     }
 }

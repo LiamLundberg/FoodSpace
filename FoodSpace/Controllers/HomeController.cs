@@ -26,25 +26,6 @@ namespace FoodSpace.Controllers
             return View();
         }
 
-        public IActionResult Fetch(SearchCriteria obj)
-        {
-            using (var client = new HttpClient())
-            {
-                var endpoint = new Uri("https://api.nal.usda.gov/fdc/v1/foods/search?query=" + obj.criteria + "&pageSize=2&api_key=SYp8Cnp4xiIclRvd2hRFL1bPKCGDBpfnlDP7wf0u");
-
-                var json = client.GetAsync(endpoint).Result.Content.ReadAsStringAsync().Result;
-
-
-                while(json == null)
-                {
-                    
-                }
-                FoodSearchResult result = JsonConvert.DeserializeObject<FoodSearchResult>(json);
-
-               }
-            
-            return View("Index");
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
