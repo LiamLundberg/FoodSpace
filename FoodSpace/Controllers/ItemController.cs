@@ -2,7 +2,9 @@
 using FoodSpace.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace FoodSpace.Controllers
 {
@@ -111,6 +113,62 @@ namespace FoodSpace.Controllers
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going ot antoher controller
             }
             return View(obj);
+        }
+
+       
+        public IActionResult SearchItem(SearchCriteria obj)
+        {
+            using (var client = new HttpClient())
+            {
+                var endpoint = new Uri("https://api.nal.usda.gov/fdc/v1/foods/search?query=" + obj.criteria + "&pageSize=" + obj.pageSize + "&api_key=SYp8Cnp4xiIclRvd2hRFL1bPKCGDBpfnlDP7wf0u");
+
+                var json = client.GetAsync(endpoint).Result.Content.ReadAsStringAsync().Result;
+
+                FoodSearchResult result = JsonConvert.DeserializeObject<FoodSearchResult>(json);
+
+                return View("NewItem", result);
+            }
+        }
+
+
+        public IActionResult Import(int fdcID)
+        {
+
+            using (var client = new HttpClient())
+            {
+                var endpoint = new Uri("https://api.nal.usda.gov/fdc/v1/food/" + fdcID + "?api_key=SYp8Cnp4xiIclRvd2hRFL1bPKCGDBpfnlDP7wf0u&format=abridged");
+
+                var json = client.GetAsync(endpoint).Result.Content.ReadAsStringAsync().Result;
+
+                Foods result = JsonConvert.DeserializeObject<Foods>(json);
+
+
+                Item newItem = new Item();
+                newItem.Name = result.description;
+
+                foreach (var obj in result.foodNutrients)
+                {
+                    if (obj.name == "Protein")
+                    {
+                        newItem.Protein = obj.amount;
+                    }
+                    else if (obj.name == "Total lipid (fat)")
+                    {
+                        newItem.Fat = obj.amount;
+                    }
+                    else if (obj.name == "Carbohydrate, by difference")
+                    {
+                        newItem.Carbohydrates = obj.amount;
+                    }
+
+                }
+
+                _db.Items.Add(newItem);
+                _db.SaveChanges();
+            }
+
+            
+            return RedirectToAction("Index");
         }
 
 

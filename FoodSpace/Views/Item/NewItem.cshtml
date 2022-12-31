@@ -39,6 +39,7 @@
         </tr>
     </thead>
     <tbody>
+        
         @foreach (var obj in Model.Foods)
         {
             <tr>
@@ -65,7 +66,11 @@
                             @objItem.value
                         </td>
                     }
+                    
                 }
+                    <td>
+                        <a asp-controller="Item" asp-action="Import" asp-route-fdcID="@obj.fdcID" class="btn btn-secondary" style="width:150px">Import</a>
+                    </td>
             </tr>
         }
     </tbody>

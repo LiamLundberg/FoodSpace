@@ -27,8 +27,13 @@ namespace FoodSpace.Models
 
     public class foodNutrients
     {
+        //this is for the purpose of single allocation
+        public string name { get; set; }
+        public float amount { get; set; } = 0;
+
+
         public string nutrientName { get; set; }
         public string unitName { get; set; }
-        public float value { get; set; }
+        public float value { get; set; } = 0;
     }
 }

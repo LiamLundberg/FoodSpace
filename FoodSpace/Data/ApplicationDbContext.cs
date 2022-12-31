@@ -9,6 +9,7 @@ namespace FoodSpace.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<Item> Items { get; set; }
@@ -17,6 +18,5 @@ namespace FoodSpace.Data
         
         public DbSet<RecipeItems> RecipeItems{ get; set; }
 
-        
     }
 }
