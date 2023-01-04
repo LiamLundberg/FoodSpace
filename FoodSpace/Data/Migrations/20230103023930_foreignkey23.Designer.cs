@@ -4,6 +4,7 @@ using FoodSpace.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodSpace.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230103023930_foreignkey23")]
+    partial class foreignkey23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,30 +77,7 @@ namespace FoodSpace.Data.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.ToTable("Item");
-                });
-
-            modelBuilder.Entity("FoodSpace.Models.ItemRecipe", b =>
-                {
-                    b.Property<int>("ItemRecipeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemRecipeId"));
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemRecipeId");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("ItemRecipe");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("FoodSpace.Models.Recipe", b =>
@@ -133,6 +113,29 @@ namespace FoodSpace.Data.Migrations
                     b.HasKey("RecipeId");
 
                     b.ToTable("Recipe");
+                });
+
+            modelBuilder.Entity("FoodSpace.Models.RecipeItems", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RecipeItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -337,16 +340,16 @@ namespace FoodSpace.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("FoodSpace.Models.ItemRecipe", b =>
+            modelBuilder.Entity("FoodSpace.Models.RecipeItems", b =>
                 {
                     b.HasOne("FoodSpace.Models.Item", "Item")
-                        .WithMany("ItemRecipe")
+                        .WithMany("RecipeItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FoodSpace.Models.Recipe", "Recipe")
-                        .WithMany("ItemRecipe")
+                        .WithMany("RecipeItems")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -409,12 +412,12 @@ namespace FoodSpace.Data.Migrations
 
             modelBuilder.Entity("FoodSpace.Models.Item", b =>
                 {
-                    b.Navigation("ItemRecipe");
+                    b.Navigation("RecipeItems");
                 });
 
             modelBuilder.Entity("FoodSpace.Models.Recipe", b =>
                 {
-                    b.Navigation("ItemRecipe");
+                    b.Navigation("RecipeItems");
                 });
 #pragma warning restore 612, 618
         }

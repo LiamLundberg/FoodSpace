@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodSpace.Controllers
 {
-    public class RecipeItemController : Controller
+    public class ItemRecipeController : Controller
     {
 
         private readonly ApplicationDbContext _db;
-        private FoodSearchResult _foodSearchResult;
 
-        public RecipeItemController(ApplicationDbContext db, FoodSearchResult foodSearchResult) { 
 
-            _foodSearchResult = foodSearchResult;
+        public ItemRecipeController(ApplicationDbContext db) { 
+
+
             _db = db;
         }
 
@@ -25,7 +25,7 @@ namespace FoodSpace.Controllers
         {
             if (id != null)
             {
-                var itemFromDb = _db.Items.Find(id);
+                var itemFromDb = _db.Item.Find(id);
                 if (itemFromDb != null)
                 {
                     

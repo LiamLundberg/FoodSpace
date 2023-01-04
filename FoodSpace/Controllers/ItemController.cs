@@ -20,11 +20,11 @@ namespace FoodSpace.Controllers
 
         public IActionResult Index(string sortOrder)
         {
-            IEnumerable<Item> objItemList = _db.Items.OrderBy(x => x.Name);
+            IEnumerable<Item> objItemList = _db.Item.OrderBy(x => x.Name);
 
             if (sortOrder.IsNullOrEmpty())
             {
-                objItemList = _db.Items.OrderBy(x => x.Name);
+                objItemList = _db.Item.OrderBy(x => x.Name);
             }
             else
             {
@@ -33,12 +33,12 @@ namespace FoodSpace.Controllers
                 case "nameSort":
                     if (TempData["sort"] == null || TempData["sort"].Equals("asc"))
                     {
-                        objItemList = _db.Items.OrderBy(x => x.Name);
+                        objItemList = _db.Item.OrderBy(x => x.Name);
                         TempData["sort"] = "desc";
                     }
                     else
                     {
-                        objItemList = _db.Items.OrderByDescending(x => x.Name);
+                        objItemList = _db.Item.OrderByDescending(x => x.Name);
                         TempData["sort"] = "asc";
                     }
 
@@ -46,12 +46,12 @@ namespace FoodSpace.Controllers
                 case "proteinSort":
                     if (TempData["sort"] == null || TempData["sort"].Equals("asc") )
                     {
-                        objItemList = _db.Items.OrderBy(x => x.Protein);
+                        objItemList = _db.Item.OrderBy(x => x.Protein);
                         TempData["sort"] = "desc";
                     }
                     else
                     {
-                        objItemList = _db.Items.OrderByDescending(x => x.Protein);
+                        objItemList = _db.Item.OrderByDescending(x => x.Protein);
                         TempData["sort"] = "asc";
                     }
 
@@ -59,12 +59,12 @@ namespace FoodSpace.Controllers
                 case "fatSort":
                     if (TempData["sort"] == null || TempData["sort"].Equals("asc"))
                     {
-                        objItemList = _db.Items.OrderBy(x => x.Fat);
+                        objItemList = _db.Item.OrderBy(x => x.Fat);
                         TempData["sort"] = "desc";
                     }
                     else
                     {
-                        objItemList = _db.Items.OrderByDescending(x => x.Fat);
+                        objItemList = _db.Item.OrderByDescending(x => x.Fat);
                         TempData["sort"] = "asc";
                     }
 
@@ -72,12 +72,12 @@ namespace FoodSpace.Controllers
                 case "carbSort":
                     if (TempData["sort"] == null || TempData["sort"].Equals("asc"))
                     {
-                        objItemList = _db.Items.OrderBy(x => x.Carbohydrates);
+                        objItemList = _db.Item.OrderBy(x => x.Carbohydrates);
                         TempData["sort"] = "desc";
                     }
                     else
                     {
-                        objItemList = _db.Items.OrderByDescending(x => x.Carbohydrates);
+                        objItemList = _db.Item.OrderByDescending(x => x.Carbohydrates);
                         TempData["sort"] = "asc";
                     }
                         
@@ -107,7 +107,7 @@ namespace FoodSpace.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Items.Add(obj);
+                _db.Item.Add(obj);
                 _db.SaveChanges();
                 TempData["success"] = "Category Created Successfully";
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going ot antoher controller
@@ -128,6 +128,35 @@ namespace FoodSpace.Controllers
 
                 return View("NewItem", result);
             }
+        }
+
+        public IActionResult AddToRecipe(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var itemFromDb = _db.Item.Find(id);
+
+            if (itemFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(itemFromDb);
+        }
+        
+        public IActionResult AddToRecipePOST(int id)
+        {
+            
+            var itemFromDB = _db.Item.Find(id);
+            ItemRecipe itemRecipe = new ItemRecipe();
+            itemRecipe.RecipeId = (int)TempData.Peek("SelectedRecipe");
+            TempData["success"] = "Item Added To Recipe";
+            itemRecipe.ItemId = itemFromDB.ItemId;
+            _db.ItemRecipe.Add(itemRecipe);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
 
@@ -163,7 +192,7 @@ namespace FoodSpace.Controllers
 
                 }
 
-                _db.Items.Add(newItem);
+                _db.Item.Add(newItem);
                 _db.SaveChanges();
             }
 
@@ -177,7 +206,7 @@ namespace FoodSpace.Controllers
             if (id == null || id == 0) {
             return NotFound();
             }
-            var itemFromDb = _db.Items.Find(id);
+            var itemFromDb = _db.Item.Find(id);
             //var itemFromDbFirst = _db.Items.FirstOrDefault(x => x.Id == id);
             //var itemFromDBSingle = _db.Items.SingleOrDefault(x => x.Id == id);
 
@@ -196,11 +225,10 @@ namespace FoodSpace.Controllers
             if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("Name", "Display Order Cannot exactly match name");
-                ModelState.AddModelError("DisplayOrder", "Display Order Cannot exactly match name");
             }
             if (ModelState.IsValid)
             {
-                _db.Items.Update(obj);
+                _db.Item.Update(obj);
                 _db.SaveChanges();
                 TempData["success"] = "Category Edited Successfully";
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going ot antoher controller
@@ -214,7 +242,7 @@ namespace FoodSpace.Controllers
             {
                 return NotFound();
             }
-            var itemFromDb = _db.Items.Find(id);
+            var itemFromDb = _db.Item.Find(id);
             //var itemFromDbFirst = _db.Items.FirstOrDefault(x => x.Id == id);
             //var itemFromDBSingle = _db.Items.SingleOrDefault(x => x.Id == id);
 
@@ -230,12 +258,12 @@ namespace FoodSpace.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.Items.Find(id);
+            var obj = _db.Item.Find(id);
             if(obj == null) { 
                 return NotFound();
             }
 
-            _db.Items.Remove(obj);
+            _db.Item.Remove(obj);
             _db.SaveChanges();
             TempData["success"] = "Category Deleted Successfully";
             return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller

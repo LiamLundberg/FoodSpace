@@ -6,11 +6,11 @@ using Microsoft.Data.SqlClient;
 
 namespace FoodSpace.Controllers
 {
-    public class DynamicRecipeController : Controller
+    public class RecipeController : Controller
     {
         private readonly ApplicationDbContext _db;
 
-        public DynamicRecipeController(ApplicationDbContext db)
+        public RecipeController(ApplicationDbContext db)
         {
             _db = db;
         }
@@ -18,7 +18,7 @@ namespace FoodSpace.Controllers
         // GET: DynamicRecipeController
         public IActionResult Index()
         {
-            IEnumerable<Recipe> objItemList = _db.DynamicRecipes.OrderBy(x => x.Name);
+            IEnumerable<Recipe> objItemList = _db.Recipe.OrderBy(x => x.Name);
 
             return View(objItemList);
         }
@@ -44,12 +44,20 @@ namespace FoodSpace.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.DynamicRecipes.Add(obj);
+                _db.Recipe.Add(obj);
                 _db.SaveChanges();
                 TempData["success"] = "Recipe Created Successfully";
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller
             }
             return View(obj);
+        }
+
+        public IActionResult Select(int id)
+        {
+            TempData["SelectedRecipe"] = id;
+            
+            IEnumerable<Recipe> objItemList = _db.Recipe.OrderBy(x => x.Name);
+            return View("Index", objItemList);
         }
 
         // GET: DynamicRecipeController/Edit/5
@@ -79,7 +87,7 @@ namespace FoodSpace.Controllers
             {
                 return NotFound();
             }
-            var itemFromDb = _db.DynamicRecipes.Find(id);
+            var itemFromDb = _db.Recipe.Find(id);
             //var itemFromDbFirst = _db.Items.FirstOrDefault(x => x.Id == id);
             //var itemFromDBSingle = _db.Items.SingleOrDefault(x => x.Id == id);
 
@@ -95,13 +103,13 @@ namespace FoodSpace.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.DynamicRecipes.Find(id);
+            var obj = _db.Recipe.Find(id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.DynamicRecipes.Remove(obj);
+            _db.Recipe.Remove(obj);
             _db.SaveChanges();
             TempData["success"] = "Recipe Deleted Successfully";
             return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller
