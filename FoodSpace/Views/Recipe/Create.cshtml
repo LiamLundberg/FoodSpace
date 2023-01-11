@@ -4,6 +4,7 @@
     <div class="col-md-4">
         @*<div asp-validation-summary="All"></div>*@
         <form method="post" asp-action="Create">
+            <input type="hidden" asp-for="ItemRecipe" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label"></label>

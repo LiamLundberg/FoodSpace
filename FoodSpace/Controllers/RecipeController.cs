@@ -1,8 +1,10 @@
 ﻿using FoodSpace.Data;
 using FoodSpace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Collections.Immutable;
 
 namespace FoodSpace.Controllers
 {
@@ -27,6 +29,34 @@ namespace FoodSpace.Controllers
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        public IActionResult RecipeInfo(int id)
+        {
+            ItemRecipe[] itemRecipeList = _db.ItemRecipe.Where(y => y.RecipeId == id).ToArray();
+            
+            if (itemRecipeList.Length > 0) {
+                itemRecipeList.First().Recipe = _db.Recipe.Find(id);
+
+                Item itemTemp = new Item();
+                foreach (var item in itemRecipeList)
+                {
+                    itemTemp = _db.Item.Find(item.ItemId);
+                    if (itemTemp != null)
+                    {
+                        item.Item = itemTemp;
+                    }
+                    
+                }
+            }
+            else
+            {
+                IEnumerable<Recipe> objItemList = _db.Recipe.OrderBy(x => x.Name);
+                return View("Index", objItemList);
+            }
+            
+            
+            return View(itemRecipeList);
         }
 
         public IActionResult Create()
@@ -61,6 +91,7 @@ namespace FoodSpace.Controllers
         }
 
         // GET: DynamicRecipeController/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             return View();
@@ -81,6 +112,7 @@ namespace FoodSpace.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)

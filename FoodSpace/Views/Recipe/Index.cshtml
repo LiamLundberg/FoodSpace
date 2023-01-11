@@ -1,56 +1,49 @@
 ﻿@model IEnumerable<Recipe>
 
 
-<h1>Recipe Index</h1>
-
 <partial name="_Notification" />
 
+<body class="recipe-body">
+    
 
-<div class="container p-3">
-    <div class="row pt-4">
-        <div class="col-6">
-            <h2>
-                Recipe List
-            </h2>
-        </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Recipe" asp-action="Create" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> &nbsp; Create New Recipe
-            </a>
+    <div class="container p-3">
+        <div class="row pt-4">
+            <div>
+                <h1 style="text-align:center; font-size:80px;">
+                    Recipe List
+                </h1>
+            </div>
+            <div class="text-end">
+                <a asp-controller="Recipe" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Create New Recipe
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
-<table class="table table-bordered table-striped" style="width:100%; table-layout: fixed ;">
-    <thead>
-        <tr>
-            <th>
-                <a asp-controller="Recipe" asp-action="Index" asp-route-sortOrder="nameSort">Recipe</a>
-            </th>
-            <th>
-                Description
-            </th>
-        </tr>
-    </thead>
-    <tbody mb-200px>
+    <div display="flex" class="recipe-card-collection mb-5">
         @foreach (var obj in Model)
         {
-            <tr>
-                <td>
-                    @obj.Name
-                </td>
-                <td>
-                    @obj.Desc
-                </td>
-                <td>
-                    <div class="btn-group" role="group" style="max-width:70px">
-                        <a asp-controller="Recipe" asp-action="Edit" asp-route-id="@obj.RecipeId" class="btn btn-primary mx-2"><i class="bi bi-pencil"></i>Edit</a>
-                        <a asp-controller="Recipe" asp-action="Delete" asp-route-id="@obj.RecipeId" class="btn btn-warning mx-2"><i class="bi bi-trash"></i>Delete</a>
-                        <a asp-controller="Recipe" asp-action="Select" asp-route-id="@obj.RecipeId" class="btn btn-warning mx-2">Select</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
+            <div class="recipe-card">
+                <a asp-controller="Recipe" asp-action="RecipeInfo" asp-route-id="@obj.RecipeId" class="recipe-card-click"></a>
+                <div style="display:inline-flex">
+                    
+                    <div role="group" style="display:inline-flex; margin-left:5px; min-height:25px; margin-top:250px; position:absolute;">
+                        <a asp-controller="Recipe" asp-action="Select" asp-route-id="@obj.RecipeId" class="btn btn-success mx-1" style="border-radius:20px;"><i class="bi bi-arrow-down-circle"></i></a>
+                        <a asp-controller="Recipe" asp-action="Edit" asp-route-id="@obj.RecipeId" class="btn btn-primary mx-1" style="border-radius:20px;"><i class="bi bi-pencil"></i></a>
+                        <a asp-controller="Recipe" asp-action="Delete" asp-route-id="@obj.RecipeId" class="btn btn-danger mx-1" style="border-radius:20px;"><i class="bi bi-trash"></i></a>
 
-</table>
+                    </div>
+                    <h2 class="p-2">@obj.Name</h2>
+
+
+                </div>
+
+                <p class="p-2" style="max-height:50%">@obj.Desc</p>
+
+            </div>
+        }
+    </div>
+
+</body>
+

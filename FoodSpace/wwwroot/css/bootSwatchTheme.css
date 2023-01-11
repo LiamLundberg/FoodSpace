@@ -43,7 +43,7 @@
     --bs-warning: #ffc107;
     --bs-danger: #d9534f;
     --bs-light: #abb6c2;
-    --bs-dark: #20374c;
+    --bs-dark: #4d4d4b;
     --bs-primary-rgb: 76,155,232;
     --bs-secondary-rgb: 78,93,108;
     --bs-success-rgb: 92,184,92;
@@ -51,7 +51,7 @@
     --bs-warning-rgb: 255,193,7;
     --bs-danger-rgb: 217,83,79;
     --bs-light-rgb: 171,182,194;
-    --bs-dark-rgb: 32,55,76;
+    --bs-dark-rgb: 39,39,141;
     --bs-white-rgb: 255,255,255;
     --bs-black-rgb: 0,0,0;
     --bs-body-color-rgb: 235,235,235;
@@ -64,7 +64,8 @@
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
     --bs-body-color: #ebebeb;
-    --bs-body-bg: #0f2537;
+    --bs-body-bg-old: #0f2537;
+    --bs-body-bg: #abb6c2;
     --bs-border-width: 1px;
     --bs-border-style: solid;
     --bs-border-color: #dee2e6;
@@ -89,6 +90,103 @@
     :root {
         scroll-behavior: smooth
     }
+}
+
+.recipe-card {
+    height: 300px;
+    background-color: aliceblue;
+    border-radius: 15px;
+    box-shadow: rgb(0 0 0) 1000px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    opacity: 0.95;
+    border-color: #cdd2e5;
+    border-style: solid;
+    border-width: 1px;
+    color: #000;
+    position: relative;
+}
+
+.recipe-card-click {
+    width:100%;
+    height:100%;
+    position: absolute;
+}
+
+.recipe-card-collection {
+    display: inline-grid;
+    width: 100%;
+    column-gap: 20px;
+    row-gap: 20px;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.recipe-body {
+    height: 100%;
+    width: 100%;
+    position:center;
+}
+
+.recipe-info-body {
+    height: 1000px;
+    width: 100%;
+    opacity: 0.95;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    background-color: aliceblue;
+    position: relative;
+}
+
+.recipe-info-headerimage {
+    height: 50%;
+    width: 100%;
+    box-shadow: 0 -200px 100px rgba(0, 0, 0, 0.475) inset;
+    background-size: cover;
+    display: block;
+    background-position: center;
+    background-image: url('../lib/food temp photo.jpeg');
+}
+
+
+.recipe-body-image {
+    opacity: 0.3;
+    filter: blur(0px);
+    position: fixed;
+    background-position: center;
+    background-size: cover;
+    background-image: url('../lib/plant-based-food-mc-220323-02-273c7b.jpg');
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+.recipe-info-title-container {
+    margin-top: 30%;
+    position: absolute;
+    margin-left: 1%;
+}
+
+.recipe-info-title {
+    color: white;
+    font-size: 30pt;
+    text-align: left;
+    width: 100%;
+}
+
+.recipe-info-description {
+    color: white;
+    font-size: 18pt;
+    text-align: left;
+    width: 100%;
+    margin-left:2px;
+}
+
+.table-background {
+    background-color: aliceblue;
+    opacity: 0.9;
+    border-radius: 12px;
+}
+
+.text{
+    color: #0d0d1d;
 }
 
 body {
@@ -307,7 +405,10 @@ img, svg {
 
 table {
     caption-side: bottom;
-    border-collapse: collapse
+    border-collapse: collapse ;
+    width: 100%;
+    color: #000;
+    table-layout: auto;
 }
 
 caption {
@@ -1888,7 +1989,7 @@ progress {
     --bs-table-hover-bg: rgba(255, 255, 255, 0.075);
     width: 100%;
     margin-bottom: 1rem;
-    color: var(--bs-table-color);
+    color: black;
     vertical-align: top;
     border-color: var(--bs-table-border-color)
 }
@@ -4032,12 +4133,14 @@ textarea.form-control-lg {
     --bs-navbar-toggler-border-radius: 0;
     --bs-navbar-toggler-focus-width: 0.25rem;
     --bs-navbar-toggler-transition: box-shadow 0.15s ease-in-out;
+    background-color: aliceblue;
     position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x)
+    padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+    color:black;
 }
 
     .navbar > .container, .navbar > .container-fluid, .navbar > .container-lg, .navbar > .container-md, .navbar > .container-sm, .navbar > .container-xl, .navbar > .container-xxl {
@@ -4052,7 +4155,6 @@ textarea.form-control-lg {
     padding-bottom: var(--bs-navbar-brand-padding-y);
     margin-right: var(--bs-navbar-brand-margin-end);
     font-size: var(--bs-navbar-brand-font-size);
-    color: var(--bs-navbar-brand-color);
     text-decoration: none;
     white-space: nowrap
 }
@@ -4086,7 +4188,6 @@ textarea.form-control-lg {
 .navbar-text {
     padding-top: .5rem;
     padding-bottom: .5rem;
-    color: var(--bs-navbar-color)
 }
 
     .navbar-text a, .navbar-text a:focus, .navbar-text a:hover {
@@ -4483,7 +4584,7 @@ textarea.form-control-lg {
         }
 
 .navbar-dark {
-    --bs-navbar-color: rgba(255, 255, 255, 0.75);
+    --bs-navbar-color: rgb(73, 73, 73, 0.88);
     --bs-navbar-hover-color: #fff;
     --bs-navbar-disabled-color: rgba(255, 255, 255, 0.25);
     --bs-navbar-active-color: #fff;
@@ -7248,7 +7349,7 @@ textarea.form-control-lg {
 }
 
 .text-bg-light {
-    color: #fff !important;
+    color: aliceblue;
     background-color: RGBA(171,182,194,var(--bs-bg-opacity,1)) !important
 }
 
@@ -8748,8 +8849,7 @@ textarea.form-control-lg {
 }
 
 .bg-light {
-    --bs-bg-opacity: 1;
-    background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity)) !important
+    background-color: aliceblue;
 }
 
 .bg-dark {
@@ -12268,7 +12368,7 @@ textarea.form-control-lg {
     }
 
     .table a:not(.btn) {
-        color: #fff;
+        color: black;
         text-decoration: underline
     }
 

@@ -1,19 +1,16 @@
 ﻿@model FoodSearchResult
 
-
-<h1>Add Item</h1>
-
 <partial name="_Notification" />
 
 
 <div class="container p-3">
     <div class="row pt-4">
-        <div class="col-6">
-            <h2>
-                Item List
-            </h2>
+        <div>
+            <h1 style="text-align:center; font-size:80px;">
+                Import Item
+            </h1>
         </div>
-        <div class="col-6 text-end">
+        <div class="text-end">
             <a asp-controller="Item" asp-action="Create" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> &nbsp; Create New Item
             </a>
@@ -21,7 +18,8 @@
     </div>
 </div>
 
-<table class="table table-bordered table-striped" style="width:100%; table-layout:auto ;">
+<div class="table-background">
+    <table class="table table-bordered" style="width:100%; table-layout:auto ;">
     <thead>
         <tr>
             <th>
@@ -75,3 +73,4 @@
         }
     </tbody>
 </table>
+</div>

@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<ItemRecipe>
+
+<body>
+
+    <div class="recipe-info-body">
+
+        <div class="recipe-info-headerimage">  
+            <div class="recipe-info-title-container">
+                <h1 class="recipe-info-title">@Model.First().Recipe.Name</h1>
+                <h2 class="recipe-info-description">@Model.First().Recipe.Desc</h2>
+            </div>
+            
+        </div>
+        <div class="container p-3">
+            
+
+        <h2>Ingredients</h2>
+
+            @if (Model.First().Item != null)
+                foreach (var obj in Model)
+                {
+                    <p>@obj.Item.Name</p>
+                }
+        </div>
+    </div>
+</body>
