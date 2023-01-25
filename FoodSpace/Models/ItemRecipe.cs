@@ -11,5 +11,6 @@ namespace FoodSpace.Models
         public int RecipeId { get; set; }
         public Item Item { get; set; }
         public Recipe Recipe { get; set; }
+        public int Amount { get; set; }
     }
 }

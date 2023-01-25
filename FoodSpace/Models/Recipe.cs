@@ -17,12 +17,15 @@ namespace FoodSpace.Models;
     public string Name { get; set; }
     public string Desc { get; set; }
     public virtual ICollection<ItemRecipe> ItemRecipe { get; set; }
+    public virtual ICollection<Step> Steps { get; set; }
     [DisplayName("Display Order")]
     //[Range(1,100, ErrorMessage = "Please enter a value between 1 and 100!")]
     public int DisplayOrder { get; set; }
     public int ServingSize { get; set; }
     public string ServingDesc { get; set; } = String.Empty;
     public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-
-    }
+    public double Carbohydrates { get; set; } = 0.0;
+    public double Protein { get; set; } = 0.0;
+    public double Fat { get; set; } = 0.0;
+}
 

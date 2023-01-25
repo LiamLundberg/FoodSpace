@@ -19,6 +19,8 @@ namespace FoodSpace.Data
         
         public DbSet<ItemRecipe> ItemRecipe { get; set; }
 
+        public DbSet<Step> Step { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -36,6 +38,15 @@ namespace FoodSpace.Data
                 .HasOne(x => x.Recipe)
                 .WithMany(x => x.ItemRecipe)
                 .HasForeignKey(x => x.RecipeId);
+
+            builder.Entity<Step>()
+               .HasKey(x => new { x.StepId });
+
+            builder.Entity<Step>()
+                .HasOne(x => x.Recipe)
+                .WithMany(x => x.Steps)
+                .HasForeignKey(x => x.RecipeId);
+                
         }
     }
 }

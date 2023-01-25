@@ -35,18 +35,24 @@ namespace FoodSpace.Controllers
         {
             ItemRecipe[] itemRecipeList = _db.ItemRecipe.Where(y => y.RecipeId == id).ToArray();
             
+
             if (itemRecipeList.Length > 0) {
                 itemRecipeList.First().Recipe = _db.Recipe.Find(id);
-
+                Step[] step = _db.Step.Where(h => h.RecipeId == id).OrderBy(x => x.StepNumber).ToArray();
+                itemRecipeList.First().Recipe.Steps = step;
                 Item itemTemp = new Item();
                 foreach (var item in itemRecipeList)
                 {
                     itemTemp = _db.Item.Find(item.ItemId);
                     if (itemTemp != null)
                     {
+                        itemRecipeList.First().Recipe.Carbohydrates += Math.Round(item.Item.Carbohydrates, 0);
+                        itemRecipeList.First().Recipe.Fat += Math.Round(item.Item.Fat, 0);
+                        itemRecipeList.First().Recipe.Protein += Math.Round(item.Item.Protein, 0);
+                        
                         item.Item = itemTemp;
                     }
-                    
+
                 }
             }
             else
@@ -54,9 +60,41 @@ namespace FoodSpace.Controllers
                 IEnumerable<Recipe> objItemList = _db.Recipe.OrderBy(x => x.Name);
                 return View("Index", objItemList);
             }
-            
-            
+
+
             return View(itemRecipeList);
+        }
+
+        public IActionResult Step(int id)
+        {
+            Recipe tempRecipe = _db.Recipe.Find(id);
+            Step step = new Step();
+            step.RecipeId = tempRecipe.RecipeId;
+            step.Recipe = tempRecipe;
+            return View(step);
+        }
+
+        [HttpPost]
+        public IActionResult AddStep(Step step)
+        {
+            _db.Step.Add(step);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteStep(Step step)
+        {
+            Step[] objs = _db.Step.Where(x => x.RecipeId == step.RecipeId & x.StepNumber == step.StepNumber).ToArray();
+            if (objs != null)
+            {
+                foreach(var item in objs)
+                {
+                    _db.Step.Remove(item);
+                }
+                _db.SaveChanges();
+            }
+            
+            return RedirectToAction("Index");
         }
 
         public IActionResult Create()
@@ -80,6 +118,15 @@ namespace FoodSpace.Controllers
                 return RedirectToAction("Index"); //this can be done as return RedirectToAction("Index", "Home"); if we are going to antoher controller
             }
             return View(obj);
+        }
+
+        public IActionResult DeleteRecipeItem(int id)
+        {
+            var obj = _db.ItemRecipe.Find(id);
+            _db.ItemRecipe.Remove(obj);
+            IEnumerable<Recipe> objItemList = _db.Recipe.OrderBy(x => x.Name);
+            _db.SaveChanges();
+            return View("Index", objItemList);
         }
 
         public IActionResult Select(int id)

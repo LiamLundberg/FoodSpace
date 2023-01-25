@@ -137,23 +137,25 @@ namespace FoodSpace.Controllers
                 return NotFound();
             }
             var itemFromDb = _db.Item.Find(id);
+            var recipeFromDb = _db.Recipe.Find((int)TempData.Peek("SelectedRecipe"));
+            ItemRecipe tempItemRecipe = new ItemRecipe();
+            tempItemRecipe.Item = itemFromDb;
+            tempItemRecipe.ItemId = itemFromDb.ItemId;
+            tempItemRecipe.Recipe = recipeFromDb;
+            tempItemRecipe.RecipeId = recipeFromDb.RecipeId;
 
             if (itemFromDb == null)
             {
                 return NotFound();
             }
 
-            return View(itemFromDb);
+            return View(tempItemRecipe);
         }
         
-        public IActionResult AddToRecipePOST(int id)
+        public IActionResult AddToRecipePOST(ItemRecipe itemRecipe)
         {
             
-            var itemFromDB = _db.Item.Find(id);
-            ItemRecipe itemRecipe = new ItemRecipe();
-            itemRecipe.RecipeId = (int)TempData.Peek("SelectedRecipe");
             TempData["success"] = "Item Added To Recipe";
-            itemRecipe.ItemId = itemFromDB.ItemId;
             _db.ItemRecipe.Add(itemRecipe);
             _db.SaveChanges();
             return RedirectToAction("Index");

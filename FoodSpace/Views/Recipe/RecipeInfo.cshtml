@@ -5,27 +5,103 @@
 }
 @model IEnumerable<ItemRecipe>
 
+<script>
+
+    let var itemCalories = 0;
+    
+        
+    
+</script>
+
+
 <body>
 
     <div class="recipe-info-body">
 
-        <div class="recipe-info-headerimage">  
+        <div class="recipe-info-headerimage" style="z-index:1;">  
             <div class="recipe-info-title-container">
                 <h1 class="recipe-info-title">@Model.First().Recipe.Name</h1>
                 <h2 class="recipe-info-description">@Model.First().Recipe.Desc</h2>
             </div>
             
         </div>
-        <div class="container p-3">
+
+        <div class="container p-3" style="width:100%;">
             
+            <div style="display:flex; justify-content:flex-start;">
+                <div style="width:50%;">
+                    <h2>Ingredients</h2>
 
-        <h2>Ingredients</h2>
 
-            @if (Model.First().Item != null)
-                foreach (var obj in Model)
-                {
-                    <p>@obj.Item.Name</p>
-                }
+                    @if (Model.First().Item != null)
+                        foreach (var obj in Model)
+                        {
+                            <div style="display:flex;">
+                                <a asp-controller="Recipe" asp-action="DeleteRecipeItem" asp-route-id="@obj.ItemRecipeId" style="border-radius:20px; color:red; margin-left: 12px;"><i class="bi bi-x"></i></a>
+                                <p style="margin-left: 4px;">@obj.Item.Name</p>
+                                
+                            </div>
+                        }
+                </div>
+                <div style="width:50%;">
+                    <h2>Macros</h2>
+                    <div style="width:100%; display:flex; justify-content:flex-start; ">
+                        <div>
+                            <ul style="list-style: none; padding-left: 0; margin-left: 0; font-weight:bold;">
+                                <li>Carbs:</li>
+                                <li>Fat:</li>
+                                <li>Protein:</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul style="list-style: none;">
+                                <li>@Model.First().Recipe.Carbohydrates</li>
+                                <li>@Model.First().Recipe.Fat</li>
+                                <li>@Model.First().Recipe.Protein</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+
+        
+            </div>
+
+            <hr class="divider"></hr>
+            
+            <div style="display:flex; align-items:center;" id="method">
+                <h2>Method</h2> 
+                <a asp-controller="Recipe" asp-action="Step" asp-route-id="@Model.First().RecipeId" style="border-radius:20px; color:green; margin-left:2px;"> Add</a>
+             </div>
+
+            <ul style="list-style-type:none; padding-left: 10; margin-left: 0;">
+
+                    @if (Model.First().Recipe.Steps != null)
+                        foreach (var obj in Model.First().Recipe.Steps)
+                        {
+                        <li class="pt-2">
+                          <a><strong>Step @obj.StepNumber</strong></a>
+                        </li>
+
+                        <li>
+                            @{
+                                var boldedStep = obj.Description;
+                                foreach(var item in Model)
+                                {
+
+                                    boldedStep = boldedStep.Replace(item.Item.Name, "<b>"+item.Item.Name+"</b>");
+                                }
+                                    <p>@Html.Raw(boldedStep)</p>
+                                }
+                                
+                            </li>
+                        }
+
+
+
+
+                 </ul>
+            
         </div>
     </div>
 </body>
