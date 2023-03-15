@@ -16,8 +16,8 @@ namespace FoodSpace.Models;
     [MaxLength(64, ErrorMessage = "Max Length is 64 Characters!")]
     public string Name { get; set; }
     public string Desc { get; set; }
-    public virtual ICollection<ItemRecipe> ItemRecipe { get; set; }
-    public virtual ICollection<Step> Steps { get; set; }
+    public virtual ICollection<ItemRecipe>? ItemRecipe { get; set; }
+    public virtual ICollection<Step>? Steps { get; set; }
     [DisplayName("Display Order")]
     //[Range(1,100, ErrorMessage = "Please enter a value between 1 and 100!")]
     public int DisplayOrder { get; set; }
@@ -28,4 +28,3 @@ namespace FoodSpace.Models;
     public double Protein { get; set; } = 0.0;
     public double Fat { get; set; } = 0.0;
 }
-

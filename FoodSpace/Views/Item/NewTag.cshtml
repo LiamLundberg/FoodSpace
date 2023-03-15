@@ -1,0 +1,23 @@
+﻿@model Tag
+
+<div class="col-md-4">
+    @*<div asp-validation-summary="All"></div>*@
+    <form method="post" asp-action="NewTagPost">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group mb-3">
+            <Button type="submit" class="btn btn-primary" style="width:150px">Create</Button>
+            <a asp-controller="Item" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
+        </div>
+    </form>
+</div>

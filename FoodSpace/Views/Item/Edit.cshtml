@@ -1,46 +1,60 @@
 ﻿@model FoodSpace.Models.Item
 
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ItemId" />
-            <input type="hidden" asp-for="ItemRecipe" />
-            <div class="form-group mb-3">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ServingDesc" class="control-label"></label>
-                <input asp-for="ServingDesc" class="form-control" />
-                <span asp-validation-for="ServingDesc" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ServingSize" class="control-label"></label>
-                <input asp-for="ServingSize" class="form-control" />
-                <span asp-validation-for="ServingSize" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Protein" class="control-label"></label>
-                <input asp-for="Protein" class="form-control" />
-                <span asp-validation-for="Protein" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Fat" class="control-label"></label>
-                <input asp-for="Fat" class="form-control" />
-                <span asp-validation-for="Fat" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Carbohydrates" class="control-label"></label>
-                <input asp-for="Carbohydrates" class="form-control" />
-                <span asp-validation-for="Carbohydrates" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <Button type="submit" class="btn btn-primary" style="width:150px">Edit</Button>
-                <a asp-controller="Item" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
-            </div>
-        </form>
+    <div style="display:grid; grid-template-columns:auto auto;">
+        <div style="width:48%">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ItemId" />
+                <input type="hidden" asp-for="ItemRecipe" />
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="ServingDesc" class="control-label"></label>
+                    <input asp-for="ServingDesc" class="form-control" />
+                    <span asp-validation-for="ServingDesc" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="ServingSize" class="control-label"></label>
+                    <input asp-for="ServingSize" class="form-control" />
+                    <span asp-validation-for="ServingSize" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="ServingType" class="control-label"></label>
+                    <input asp-for="ServingType" class="form-control" />
+                    <span asp-validation-for="ServingType" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Protein" class="control-label"></label>
+                    <input asp-for="Protein" class="form-control" />
+                    <span asp-validation-for="Protein" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Fat" class="control-label"></label>
+                    <input asp-for="Fat" class="form-control" />
+                    <span asp-validation-for="Fat" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Carbohydrates" class="control-label"></label>
+                    <input asp-for="Carbohydrates" class="form-control" />
+                    <span asp-validation-for="Carbohydrates" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <Button type="submit" class="btn btn-primary" style="width:150px">Edit</Button>
+                    <Button asp-action="AddTag" type="submit" class="btn btn-primary" style="width:150px">Add Tag</Button>
+                    <a asp-controller="Item" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
+                </div>
+            </form>
+        </div>
+        <div style="width:48%; padd">
+            @foreach(var obj in Model.ItemTag)
+            {
+                <p>Tag: @obj.Tag.Name</p>
+            }
+        </div>
         
     </div>
 </div>

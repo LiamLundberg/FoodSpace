@@ -46,13 +46,12 @@ namespace FoodSpace.Controllers
                     itemTemp = _db.Item.Find(item.ItemId);
                     if (itemTemp != null)
                     {
-                        itemRecipeList.First().Recipe.Carbohydrates += Math.Round(item.Item.Carbohydrates, 0);
-                        itemRecipeList.First().Recipe.Fat += Math.Round(item.Item.Fat, 0);
-                        itemRecipeList.First().Recipe.Protein += Math.Round(item.Item.Protein, 0);
+                        itemRecipeList.First().Recipe.Carbohydrates += Math.Round(item.Item.Carbohydrates * (item.Amount / 100f));
+                        itemRecipeList.First().Recipe.Fat += Math.Round(item.Item.Fat * (item.Amount / 100f));
+                        itemRecipeList.First().Recipe.Protein += Math.Round(item.Item.Protein * (item.Amount / 100f));
                         
                         item.Item = itemTemp;
                     }
-
                 }
             }
             else

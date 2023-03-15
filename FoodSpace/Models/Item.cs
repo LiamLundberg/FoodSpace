@@ -12,10 +12,12 @@ public class Item
 	[MaxLength(256, ErrorMessage = "Max Length is 256 Characters!")]
     public string Name { get; set; }
     public virtual ICollection<ItemRecipe>? ItemRecipe { get; set; }
+    public virtual ICollection<ItemTag>? ItemTag { get; set; }
 	[DisplayName("Display Order")]
 	//[Range(1,100, ErrorMessage = "Please enter a value between 1 and 100!")]
 	public int DisplayOrder { get; set; } = 0;
     public int ServingSize { get; set; } = 0;
+    public string ServingType { get; set; } = "Default";
     public string ServingDesc { get; set; } = "Default";
     public bool AllerginNuts { get; set; }
     public bool AllerginSoy { get; set; }

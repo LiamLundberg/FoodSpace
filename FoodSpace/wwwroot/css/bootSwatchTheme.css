@@ -147,7 +147,7 @@
 }
 
 .recipe-info-headerimage {
-    height: 520px;
+    height: 100%;
     width: 100%;
     box-shadow: 0 -200px 100px rgba(0, 0, 0, 0.475) inset;
     background-size: cover;
@@ -170,10 +170,10 @@
 }
 
 .recipe-info-title-container {
-    margin-top: 400px;
     position: absolute;
+    bottom:0;
     margin-left: 1%;
-    overflow:hidden;
+    padding-bottom:1%;
 }
 
 .recipe-info-title {

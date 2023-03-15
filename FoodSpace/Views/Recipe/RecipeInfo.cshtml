@@ -17,31 +17,64 @@
 <body>
 
     <div class="recipe-info-body">
-
-        <div class="recipe-info-headerimage" style="z-index:1;">  
-            <div class="recipe-info-title-container">
-                <h1 class="recipe-info-title">@Model.First().Recipe.Name</h1>
-                <h2 class="recipe-info-description">@Model.First().Recipe.Desc</h2>
+            <div style="height:45vh; position:relative;">
+                <div class="recipe-info-title-container">
+                    <h1 class="recipe-info-title">@Model.First().Recipe.Name</h1>
+                    <h2 class="recipe-info-description">@Model.First().Recipe.Desc</h2>
+                </div>
+                <div class="recipe-info-headerimage" style="z-index:1;">  
+                    
+                </div>
             </div>
-            
-        </div>
+        
 
         <div class="container p-3" style="width:100%;">
             
             <div style="display:flex; justify-content:flex-start;">
                 <div style="width:50%;">
                     <h2>Ingredients</h2>
+                    <div style="align-items: center; display:grid; grid-template-columns: 35% 35%;">
+                        @if (Model.First().Item != null)
+                            foreach (var obj in Model)
+                            {
+                                <div style="display:flex;">
+                                    <a asp-controller="Recipe" asp-action="DeleteRecipeItem" asp-route-id="@obj.ItemRecipeId" style="padding-top:17px; color:red; margin-left: 12px;"><i class="bi bi-x"></i></a>
+                                    <div style="margin-left: 4px;">
+                                        
+                                        @{
+                                            if(obj.Amount < 45 && obj.Item.ServingType != "Whole")
+                                            {
+                                                if(obj.Amount%15 == 0)
+                                                {
+                                                    <p style="font-size:8pt; margin-bottom:auto; color:#232323;">@(obj.Amount / 15) Tbs (@obj.Amount @obj.Item.ServingType)</p>
+                                                }
+                                                else if (obj.Amount % 5 == 0 && obj.Amount < 15)
+                                                {
+                                                    <p style="font-size:8pt; margin-bottom:auto; color:#232323;">@(obj.Amount / 5) tsp (@obj.Amount @obj.Item.ServingType)</p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="font-size:8pt; margin-bottom:auto; color:#232323;">@obj.Amount @obj.Item.ServingType</p>
+                                                }
+                                            }
+                                            else if (obj.Item.ServingType != "Whole" && obj.Amount % 125 == 0)
+                                            {
+                                                <p style="font-size:8pt; margin-bottom:auto; color:#232323;">@((obj.Amount / 125)/2f) cups (@obj.Amount @obj.Item.ServingType)</p>
+                                            }
+                                            else
+                                            {
+                                                <p style="font-size:8pt; margin-bottom:auto; color:#232323;">@obj.Amount @obj.Item.ServingType</p>
+                                            }
 
-
-                    @if (Model.First().Item != null)
-                        foreach (var obj in Model)
-                        {
-                            <div style="display:flex;">
-                                <a asp-controller="Recipe" asp-action="DeleteRecipeItem" asp-route-id="@obj.ItemRecipeId" style="border-radius:20px; color:red; margin-left: 12px;"><i class="bi bi-x"></i></a>
-                                <p style="margin-left: 4px;">@obj.Item.Name</p>
+                                        }
+                                        <p style="font-weight:bold; color:#232323;">@obj.Item.Name</p>
+                                    </div>
+                                </div>
                                 
-                            </div>
-                        }
+                            }
+                    </div>
+
+                    
                 </div>
                 <div style="width:50%;">
                     <h2>Macros</h2>

@@ -130,6 +130,47 @@ namespace FoodSpace.Controllers
             }
         }
 
+        public IActionResult AddTag(Item item)
+        {
+            ItemTag itemTag = new ItemTag();
+            itemTag.Item = item;
+            return View(itemTag);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddTagPOST(ItemTag itemTag)
+        {
+            ItemTag tempItemTag = itemTag;
+
+            ICollection<Tag> tempTag = _db.Tag.Where(x => x.Name == itemTag.Tag.Name).ToArray();
+
+            if (tempTag != null)
+            {
+                tempItemTag.Tag = tempTag.First();
+                _db.ItemTag.Add(tempItemTag);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult NewTag()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult NewTagPost(Tag tag)
+        {
+            
+                _db.Tag.Add(tag);
+                _db.SaveChanges();
+            
+            
+            return RedirectToAction("Index");
+        }
+
         public IActionResult AddToRecipe(int id)
         {
             if (id == null || id == 0)
@@ -176,6 +217,8 @@ namespace FoodSpace.Controllers
 
                 Item newItem = new Item();
                 newItem.Name = result.description;
+                if(newItem.Name.Length > 64)
+                    newItem.Name = newItem.Name.Substring(0, 63);
 
                 foreach (var obj in result.foodNutrients)
                 {
@@ -194,6 +237,7 @@ namespace FoodSpace.Controllers
 
                 }
 
+
                 _db.Item.Add(newItem);
                 _db.SaveChanges();
             }
@@ -208,7 +252,7 @@ namespace FoodSpace.Controllers
             if (id == null || id == 0) {
             return NotFound();
             }
-            var itemFromDb = _db.Item.Find(id);
+            var itemFromDb = _db.Item.Include(i => i.ItemTag).ThenInclude(it => it.Tag).FirstOrDefault(x => x.ItemId == id);
             //var itemFromDbFirst = _db.Items.FirstOrDefault(x => x.Id == id);
             //var itemFromDBSingle = _db.Items.SingleOrDefault(x => x.Id == id);
 
