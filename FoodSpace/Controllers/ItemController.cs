@@ -202,6 +202,10 @@ namespace FoodSpace.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult ImportSearch()
+        {
+            return View();
+        }
 
         public IActionResult Import(int fdcID)
         {

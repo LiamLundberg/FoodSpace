@@ -133,7 +133,7 @@ namespace FoodSpace.Controllers
             TempData["SelectedRecipe"] = id;
             
             IEnumerable<Recipe> objItemList = _db.Recipe.OrderBy(x => x.Name);
-            return View("Index", objItemList);
+            return RedirectToAction("Index", "Item");
         }
 
         // GET: DynamicRecipeController/Edit/5

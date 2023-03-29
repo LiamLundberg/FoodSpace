@@ -4,19 +4,22 @@
 
 @model FoodSpace.Data.SearchCriteria
 
-<div class="text-center">
+<div class="text-center" style="display:flex; width:100%; justify-content:center;">
 
-    <form asp-controller="Item"  asp-action="SearchItem" method="post">
-        <div class="form-group mb-3">
+    <form asp-controller="Recipe" asp-action="Index" method="post" style="width:50%; min-width:300px;">
+        <div class="form-group mb-3" style="margin-top: 25vh;">
 
-            <label asp-for="criteria" class="control-label" style="font-size:80px;"></label>
-            <input asp-for="criteria" class="form-control" />
-            <span asp-validation-for="criteria" class="text-danger"></span>
+            <label asp-for="criteria" class="control-label" style="font-size:50px; color:white;">Search Recipes</label>
+            <div style="display:flex; justify-content:end; opacity:0.8;">
+                <input asp-for="criteria" class="form-control" style="border-radius: 15px; padding-left:3%; height:50px; font-size:20px;" />
+                <span asp-validation-for="criteria" class="text-danger"></span>
+                <Button type="submit" class="btn" style="position:absolute; color:#4e5d6c; justify-content:right; text-align:center; font-size:25px;"><i class="bi bi-search"></i></Button>
+            </div>
+            
         </div>
 
-        <div class="form-group mb-3">
-            <Button type="submit" class="btn btn-primary" style="width:150px">Search</Button>
-        </div>
+        
+        
      </form>
 
     

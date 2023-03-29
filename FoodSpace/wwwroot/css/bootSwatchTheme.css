@@ -154,11 +154,12 @@
     display: block;
     background-position: center;
     background-image: url('../lib/food temp photo.jpeg');
+    z-index: 1;
 }
 
 
 .recipe-body-image {
-    opacity: 0.3;
+    opacity: 0.35;
     filter: blur(0px);
     position: fixed;
     background-position: center;
@@ -189,6 +190,12 @@
     text-align: left;
     width: 100%;
     margin-left:2px;
+}
+
+.recipe-info-ingredient-amount {
+    font-size: 8pt;
+    margin-bottom: auto;
+    color: #232323;
 }
 
 .table-background {

@@ -5,15 +5,23 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div>
-            <h1 style="text-align:center; font-size:80px;">
-                Item List
+            <h1 style="text-align:center; font-size:80px; color:white;">
+                Items
             </h1>
+        </div>
+        <div style="display:flex; justify-content:end;">
+            <div class="text-end" style="margin-right:10px;">
+            <a asp-controller="Item" asp-action="ImportSearch" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Import Item
+            </a>
         </div>
         <div class="text-end">
             <a asp-controller="Item" asp-action="Create" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> &nbsp; Create New Item
             </a>
         </div>
+        </div>
+        
     </div>
 </div>
 

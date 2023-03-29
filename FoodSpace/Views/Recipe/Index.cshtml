@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Recipe>
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
 
 <partial name="_Notification" />
 
@@ -9,8 +11,8 @@
     <div class="container p-3">
         <div class="row pt-4">
             <div>
-                <h1 style="text-align:center; font-size:80px;">
-                    Recipe List
+                <h1 style="text-align:center; font-size:80px; color:white;">
+                    Recipes
                 </h1>
             </div>
             <div class="text-end">
@@ -27,13 +29,17 @@
             <div class="recipe-card">
                 <a asp-controller="Recipe" asp-action="RecipeInfo" asp-route-id="@obj.RecipeId" class="recipe-card-click"></a>
                 <div style="display:inline-flex">
-                    
-                    <div role="group" style="display:inline-flex; margin-left:5px; min-height:25px; margin-top:250px; position:absolute;">
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <div role="group" style="display:inline-flex; margin-left:5px; min-height:25px; margin-top:250px; position:absolute;">
                         <a asp-controller="Recipe" asp-action="Select" asp-route-id="@obj.RecipeId" class="btn btn-success mx-1" style="border-radius:20px;"><i class="bi bi-arrow-down-circle"></i></a>
                         <a asp-controller="Recipe" asp-action="Edit" asp-route-id="@obj.RecipeId" class="btn btn-primary mx-1" style="border-radius:20px;"><i class="bi bi-pencil"></i></a>
                         <a asp-controller="Recipe" asp-action="Delete" asp-route-id="@obj.RecipeId" class="btn btn-danger mx-1" style="border-radius:20px;"><i class="bi bi-trash"></i></a>
 
                     </div>
+                    }
+                    
                     <h2 class="p-2">@obj.Name</h2>
 
 
