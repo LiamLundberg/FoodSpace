@@ -66,7 +66,6 @@ namespace FoodSpace.Controllers
 
         public IActionResult Step(int id)
         {
-            Recipe tempRecipe = _db.Recipe.Find(id);
             Step step = new Step();
             step.RecipeId = tempRecipe.RecipeId;
             step.Recipe = tempRecipe;
