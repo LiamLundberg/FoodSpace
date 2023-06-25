@@ -15,8 +15,10 @@
 
 
 <body>
-
-    <div class="recipe-info-body">
+    <div class="recipe-body-image" style="">
+    </div>
+    <div class="container">
+        <div class="recipe-info-body">
             <div style="height:35vh; position:relative;">
                 <div class="recipe-info-title-container">
                     <h1 class="recipe-info-title">@Model.First().Recipe.Name</h1>
@@ -29,7 +31,6 @@
         
 
         <div class="container p-3" style="width:100%;">
-            
             <div style="display:flex; justify-content:flex-start;">
                 <div style="width:50%;">
                     <div style="display:flex; align-items:center;" id="ingredients">
@@ -66,7 +67,7 @@
                                             }
                                             else
                                             {
-                                                @if (obj.Amount > 0)
+                                                @if (obj.Amount > 0 && obj.Item.ServingSize > 0)
                                                 {
                                                     <p class="recipe-info-ingredient-amount">@(obj.Amount/obj.Item.ServingSize) @obj.Item.ServingType</p>
                                                 }else{
@@ -113,8 +114,17 @@
             
             <div style="display:flex; align-items:center;" id="method">
                 <h2>Method</h2> 
-                <a asp-controller="Recipe" asp-action="Step" asp-route-id="@Model.First().RecipeId" style="border-radius:20px; color:green; margin-left:2px;"> Add</a>
-             </div>
+                @if (@Model.First().Recipe.Steps.Count == 0)
+                {
+                    <a asp-controller="Recipe" asp-action="Step" asp-route-id="@Model.First().Recipe.Steps.First().StepId" style="border-radius:20px; color:green; margin-left:2px;"> Add</a>
+
+                }
+                else
+                {
+                    TempData["RecipeStepTemp"] = @Model.First().RecipeId;
+                    <a asp-controller="Recipe" asp-action="Step" asp-route-id="@Model.First().RecipeId" style="border-radius:20px; color:green; margin-left:2px;"> Edit</a>
+                }
+            </div>
 
             <ul style="list-style-type:none; padding-left: 10; margin-left: 0;">
 
@@ -127,15 +137,22 @@
 
                         <li>
                             @{
-                                var boldedStep = obj.Description;
-                                foreach(var item in Model)
+                                if(Model.First().Item != null)
                                 {
+                                    var boldedStep = obj.Description;
+                                    foreach(var item in Model)
+                                    {
 
-                                    boldedStep = boldedStep.Replace(item.Item.Name, "<b>"+item.Item.Name+"</b>");
-                                }
+                                        boldedStep = boldedStep.Replace(item.Item.Name, "<b>"+item.Item.Name+"</b>");
+                                    }
                                     <p>@Html.Raw(boldedStep)</p>
                                 }
-                                
+                                else
+                                {
+                                    <p>@obj.Description</p> 
+                                }
+
+                            }
                             </li>
                         }
 
@@ -146,4 +163,8 @@
             
         </div>
     </div>
+
+
+    </div>
+    
 </body>

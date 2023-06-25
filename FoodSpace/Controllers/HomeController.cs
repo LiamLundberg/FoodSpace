@@ -1,11 +1,13 @@
 ﻿using FoodSpace.Data;
 using FoodSpace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace FoodSpace.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
 

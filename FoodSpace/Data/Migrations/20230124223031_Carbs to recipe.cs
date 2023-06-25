@@ -10,6 +10,11 @@ namespace FoodSpace.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("ALTER TABLE Recipe DROP CONSTRAINT DF__Recipe__Carbohyd__531856C7");
+            migrationBuilder.DropColumn(
+                name: "Carbohydrates",
+                table: "Recipe");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_Method_Recipe_RecipeId",
                 table: "Method");
@@ -18,15 +23,6 @@ namespace FoodSpace.Data.Migrations
                 name: "PK_Method",
                 table: "Method");
 
-            migrationBuilder.RenameTable(
-                name: "Method",
-                newName: "Step");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Method_RecipeId",
-                table: "Step",
-                newName: "IX_Step_RecipeId");
-
             migrationBuilder.AddColumn<float>(
                 name: "Carbohydrates",
                 table: "Recipe",
@@ -34,10 +30,6 @@ namespace FoodSpace.Data.Migrations
                 nullable: false,
                 defaultValue: 0f);
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Step",
-                table: "Step",
-                column: "StepId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Step_Recipe_RecipeId",
@@ -51,6 +43,15 @@ namespace FoodSpace.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<float>(
+               name: "Carbohydrates",
+               table: "Recipe",
+               type: "real",
+               nullable: false,
+               defaultValue: 0f);
+
+            migrationBuilder.Sql("ALTER TABLE Recipe ADD CONSTRAINT DF__Recipe__Carbohyd__531856C7 DEFAULT 0 FOR Carbohydrates");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_Step_Recipe_RecipeId",
                 table: "Step");
@@ -63,19 +64,6 @@ namespace FoodSpace.Data.Migrations
                 name: "Carbohydrates",
                 table: "Recipe");
 
-            migrationBuilder.RenameTable(
-                name: "Step",
-                newName: "Method");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Step_RecipeId",
-                table: "Method",
-                newName: "IX_Method_RecipeId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Method",
-                table: "Method",
-                column: "StepId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Method_Recipe_RecipeId",

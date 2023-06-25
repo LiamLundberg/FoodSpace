@@ -1,4 +1,8 @@
 ﻿<!DOCTYPE html>
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,50 +16,45 @@
 
 </head>
 
-<body>
-    <div class="recipe-body-image">
-    </div>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-toggleable-sm" style="z-index:1;">
-            <div class="container-fluid">
-                <a class="navbar-brand text-dark" href="#">FoodSpace</a>
+    <header style="position:relative;">
+       
+
+        <nav class="navbar navbar-expand-lg navbar-toggleable-sm" h style="position:absolute; z-index:1;">
+            <div style="width:30vw; height:100%;">
+
+            </div>
+            <div class="container-fluid" style="position:absolute; display:flex; justify-content:start;">
                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse d-sm-inline-flex">
+                    <ul class="navbar-nav flex-grow-1" style="display:flex; justify-content:center;">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="navbar-text" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Index">Item</a>
+                            <a class="navbar-text" asp-area="" asp-controller="Item" asp-action="Index">ITEMS</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Recipe" asp-action="Index">Recipes</a>
-                        </li>
-                        
-                        @*
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <li class="nav-item recipe-button">
+                            <a class="navbar-text" asp-area="" asp-controller="Recipe" asp-action="Index">RECIPES</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                                <a class="dropdown-item" asp-controller="Recipe" asp-action="Create">Create</a>
                             </div>
-                        </li>*@
+                          </li>
                     </ul>
-                    <partial name="_LoginPartial" />
                 </div>
             </div>
+                <div style="justify-content:end; display:flex; align-content:center; position:absolute; right:0; padding:1%; width:20%;">
+
+                            <partial name="_LoginPartial"/>
+                </div>
         </nav>
     </header>
     
 
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div>
+        <main role="main">
             @RenderBody()
         </main>
     </div>
@@ -64,5 +63,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
+
 </html>

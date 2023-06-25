@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodSpace.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230103110341_foreignkey34")]
-    partial class foreignkey34
+    [Migration("20230502045615_update amount")]
+    partial class updateamount
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,8 +62,8 @@ namespace FoodSpace.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<float>("Protein")
                         .HasColumnType("real");
@@ -75,6 +75,10 @@ namespace FoodSpace.Data.Migrations
                     b.Property<int>("ServingSize")
                         .HasColumnType("int");
 
+                    b.Property<string>("ServingType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ItemId");
 
                     b.ToTable("Item");
@@ -82,17 +86,54 @@ namespace FoodSpace.Data.Migrations
 
             modelBuilder.Entity("FoodSpace.Models.ItemRecipe", b =>
                 {
-                    b.Property<int>("RecipeId")
+                    b.Property<int>("ItemRecipeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemRecipeId"));
+
+                    b.Property<int>("Amount")
                         .HasColumnType("int");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.HasKey("RecipeId", "ItemId");
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemRecipeId");
 
                     b.HasIndex("ItemId");
 
+                    b.HasIndex("RecipeId");
+
                     b.ToTable("ItemRecipe");
+                });
+
+            modelBuilder.Entity("FoodSpace.Models.ItemTag", b =>
+                {
+                    b.Property<int>("ItemTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemTagId"));
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weighting")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemTagId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ItemTag");
                 });
 
             modelBuilder.Entity("FoodSpace.Models.Recipe", b =>
@@ -102,6 +143,9 @@ namespace FoodSpace.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecipeId"));
+
+                    b.Property<double>("Carbohydrates")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
@@ -113,10 +157,16 @@ namespace FoodSpace.Data.Migrations
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
+                    b.Property<double>("Fat")
+                        .HasColumnType("float");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<double>("Protein")
+                        .HasColumnType("float");
 
                     b.Property<string>("ServingDesc")
                         .IsRequired()
@@ -128,6 +178,59 @@ namespace FoodSpace.Data.Migrations
                     b.HasKey("RecipeId");
 
                     b.ToTable("Recipe");
+                });
+
+            modelBuilder.Entity("FoodSpace.Models.Step", b =>
+                {
+                    b.Property<int>("StepId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StepId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StepNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StepId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("Step");
+                });
+
+            modelBuilder.Entity("FoodSpace.Models.Tag", b =>
+                {
+                    b.Property<int>("TagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TagId");
+
+                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -351,6 +454,36 @@ namespace FoodSpace.Data.Migrations
                     b.Navigation("Recipe");
                 });
 
+            modelBuilder.Entity("FoodSpace.Models.ItemTag", b =>
+                {
+                    b.HasOne("FoodSpace.Models.Item", "Item")
+                        .WithMany("ItemTag")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodSpace.Models.Tag", "Tag")
+                        .WithMany("ItemTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("FoodSpace.Models.Step", b =>
+                {
+                    b.HasOne("FoodSpace.Models.Recipe", "Recipe")
+                        .WithMany("Steps")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Recipe");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -405,11 +538,20 @@ namespace FoodSpace.Data.Migrations
             modelBuilder.Entity("FoodSpace.Models.Item", b =>
                 {
                     b.Navigation("ItemRecipe");
+
+                    b.Navigation("ItemTag");
                 });
 
             modelBuilder.Entity("FoodSpace.Models.Recipe", b =>
                 {
                     b.Navigation("ItemRecipe");
+
+                    b.Navigation("Steps");
+                });
+
+            modelBuilder.Entity("FoodSpace.Models.Tag", b =>
+                {
+                    b.Navigation("ItemTags");
                 });
 #pragma warning restore 612, 618
         }

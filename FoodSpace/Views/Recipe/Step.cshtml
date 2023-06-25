@@ -1,33 +1,44 @@
 ﻿@model Step
 
-<div class="row">
-    <div class="col-md-4">
-        <h1>@Model.Recipe.Name</h1>
-        <h2>Add Step To Method</h2>
-        @*<div asp-validation-summary="All"></div>*@
-        
-        <form method="post" asp-action="AddStep">
-            <input type="hidden" asp-for="RecipeId" value="@Model.RecipeId" />
-            <input type="hidden" asp-for="StepId" />
-            <input type="hidden" asp-for="Title" value="Default" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label asp-for="StepNumber" class="control-label"></label>
-                <input asp-for="StepNumber" class="form-control" />
-                <span asp-validation-for="StepNumber" class="text-danger"></span>
+<div>
+        <div style="display:grid; grid-template-columns: 10% 80% 10%; padding:2%;">
+             <Div style="display: flex; align-items: center; justify-content:end; margin:10px;">
+                <a asp-controller="Recipe" asp-action="StepPrev" asp-route-id="@Model.StepId" asp class="step-arrow">
+                <p><i class="bi bi-arrow-bar-left"></i></p>
+                </a>
             </div>
-            <div class="form-group mb-3" style="min-height:200px;">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea name="Description" class="form-control" style="height:200px;"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="step-window">
+
+                <h1 style="font-size:100px; text-align:center;">Step @Model.StepNumber</h1>
+                <h1>@Model.Recipe.Name</h1>
+                <h2>Add Step To Method</h2>
+
+                <form method="post" asp-action="AddStep">
+                    <input type="hidden" asp-for="RecipeId" value="@Model.RecipeId" />
+                    <input type="hidden" asp-for="StepId" />
+                    <input type="hidden" asp-for="StepNumber" value="@Model.StepNumber"/>
+                    <input type="hidden" asp-for="Title" value="Default" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3" style="min-height:200px;">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" name="Description" class="form-control" style="height:200px;" value="@Model.Description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <a asp-controller="Recipe" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
+                        <Button type="submit" class="btn btn-primary" style="width:150px">Add Step</Button>
+                        <Button type="submit" asp-action="DeleteStep" class="btn btn-danger" style="width:150px">Delete</Button>
+                    </div>
+                </form>
+
             </div>
-            <div class="form-group mb-3">
-                <Button type="submit" class="btn btn-primary" style="width:150px">Add Step</Button>
-                <a asp-controller="Recipe" asp-action="Index" class="btn btn-secondary" style="width:150px">Back</a>
-                <Button type="submit" asp-action="DeleteStep" class="btn btn-danger mt-1" style="width:150px">Delete</Button>
+            <div style="display: flex; align-items: center; justify-content:start; margin:10px;">
+                <a asp-controller="Recipe" asp-action="StepNext" asp-route-id="@Model.StepId" asp class="step-arrow">
+                    <p><i class="bi bi-arrow-bar-right"></i></p>
+                </a>
             </div>
-        </form>
-    </div>
+            
+        </div>
 </div>
 
 @section Scripts{

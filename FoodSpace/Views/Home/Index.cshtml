@@ -4,23 +4,31 @@
 
 @model FoodSpace.Data.SearchCriteria
 
-<div class="text-center" style="display:flex; width:100%; justify-content:center;">
-
-    <form asp-controller="Recipe" asp-action="Index" method="post" style="width:50%; min-width:300px;">
-        <div class="form-group mb-3" style="margin-top: 25vh;">
-
-            <label asp-for="criteria" class="control-label" style="font-size:50px; color:white;">Search Recipes</label>
-            <div style="display:flex; justify-content:end; opacity:0.8;">
-                <input asp-for="criteria" class="form-control" style="border-radius: 15px; padding-left:3%; height:50px; font-size:20px;" />
-                <span asp-validation-for="criteria" class="text-danger"></span>
-                <Button type="submit" class="btn" style="position:absolute; color:#4e5d6c; justify-content:right; text-align:center; font-size:25px;"><i class="bi bi-search"></i></Button>
-            </div>
-            
-        </div>
-
-        
-        
-     </form>
-
+<body class="body">
     
-</div>
+    <dix>
+        <div class="recipe-body-image" style="">
+        </div>
+        <div class="container">
+            <form asp-controller="Recipe" asp-action="Index" method="post" style="position:relative; justify-content:center; display:flex; width:100%; height:50%;">
+
+                <div class="home-search">
+                    <h1 class="home-search-heading">Search Recipes</h1>
+
+                    <div style="display:flex; width:100%; justify-content:center; padding-left:20%; padding-right:20%;">
+                        <div style="position:relative; width:100%;">
+                            <input class="home-search-input" asp-for="criteria" autocomplete="off" >
+                            <button type="submit" class="home-search-button" style=""><i class="bi bi-search"></i></button>
+                            </div:>
+
+                        </div>
+
+
+                        <span asp-validation-for="criteria" class="text-danger"></span>
+                    </div>
+            </form>
+        </div>
+    </dix>
+    
+        
+</body>

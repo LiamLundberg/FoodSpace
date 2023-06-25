@@ -2,86 +2,92 @@
 
 <partial name="_Notification" />
 
-<div class="container p-3">
-    <div class="row pt-4">
-        <div>
-            <h1 style="text-align:center; font-size:80px; color:white;">
-                Items
-            </h1>
-        </div>
-        <div style="display:flex; justify-content:end;">
-            <div class="text-end" style="margin-right:10px;">
-            <a asp-controller="Item" asp-action="ImportSearch" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> &nbsp; Import Item
-            </a>
-        </div>
-        <div class="text-end">
-            <a asp-controller="Item" asp-action="Create" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> &nbsp; Create New Item
-            </a>
-        </div>
-        </div>
-        
+<body class="body">
+    <div class="recipe-body-image" style="">
     </div>
-</div>
+    <div class="container">
+        <div class="row pt-4">
+            <div>
+                <h1 style="text-align:center; font-size:80px; color:white;">
+                    Items
+                </h1>
+            </div>
+            <div style="display:flex; justify-content:end;">
+                <div class="text-end" style="margin-right:10px;">
+                    <a asp-controller="Item" asp-action="ImportSearch" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Import Item
+                    </a>
+                </div>
+                <div class="text-end">
+                    <a asp-controller="Item" asp-action="Create" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Create New Item
+                    </a>
+                </div>
+            </div>
 
-<div class="table-background" style="margin-bottom: 5%;">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="nameSort">Name</a>
-                </th>
-                <th>
-                    Serving Desc
-                </th>
-                <th>
-                    Serving (grams)
-                </th>
-                <th>
-                    <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="proteinSort">Protein (per 100g)</a>
-                </th>
-                <th>
-                    <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="fatSort">Fat (per 100g)</a>
-                </th>
-                <th>
-                    <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="carbSort">Carbs (per 100g)</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var obj in Model)
-            {
+        </div>
+    
+
+    <div class="table-background">
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td>
-                        @obj.Name
-                    </td>
-                    <td>
-                        @obj.ServingDesc
-                    </td>
-                    <td>
-                        @obj.ServingSize
-                    </td>
-                    <td>
-                        @obj.Protein
-                    </td>
-                    <td>
-                        @obj.Fat
-                    </td>
-                    <td>
-                        @obj.Carbohydrates
-                    </td>
-                    <td>
-                        <div class="btn-group" style="display:grid; grid-template-columns: 33% 33% 33%; column-gap: 2px">
-                            <a asp-controller="Item" asp-action="AddToRecipe" asp-route-id="@obj.ItemId" class="btn btn-success mx-2"><i class="bi bi-box-arrow-in-down"></i></a>
-                            <a asp-controller="Item" asp-action="Edit" asp-route-id="@obj.ItemId" class="btn btn-primary mx-2"><i class="bi bi-pencil"></i></a>
-                            <a asp-controller="Item" asp-action="Delete" asp-route-id="@obj.ItemId" class="btn btn-danger mx-2"><i class="bi bi-trash"></i></a>
-                        </div>
-                    </td>
+                    <th>
+                        <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="nameSort">Name</a>
+                    </th>
+                    <th>
+                        Serving Desc
+                    </th>
+                    <th>
+                        Serving (grams)
+                    </th>
+                    <th>
+                        <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="proteinSort">Protein (per 100g)</a>
+                    </th>
+                    <th>
+                        <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="fatSort">Fat (per 100g)</a>
+                    </th>
+                    <th>
+                        <a asp-controller="Item" asp-action="Index" asp-route-sortOrder="carbSort">Carbs (per 100g)</a>
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td>
+                            @obj.Name
+                        </td>
+                        <td>
+                            @obj.ServingDesc
+                        </td>
+                        <td>
+                            @obj.ServingSize
+                        </td>
+                        <td>
+                            @obj.Protein
+                        </td>
+                        <td>
+                            @obj.Fat
+                        </td>
+                        <td>
+                            @obj.Carbohydrates
+                        </td>
+                        <td>
+                            <div class="btn-group" style="display:grid; grid-template-columns: 33% 33% 33%; column-gap: 2px">
+                                <a asp-controller="Item" asp-action="AddToRecipe" asp-route-id="@obj.ItemId" class="btn btn-success mx-2"><i class="bi bi-box-arrow-in-down"></i></a>
+                                <a asp-controller="Item" asp-action="Edit" asp-route-id="@obj.ItemId" class="btn btn-primary mx-2"><i class="bi bi-pencil"></i></a>
+                                <a asp-controller="Item" asp-action="Delete" asp-route-id="@obj.ItemId" class="btn btn-danger mx-2"><i class="bi bi-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-</div>
+    </div>
+    </div>
+
+</body>
 

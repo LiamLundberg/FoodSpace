@@ -1,0 +1,11 @@
+﻿@model Profile
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+<body>
+    <h1>@User.Identity.Name</h1>
+    
+</body>

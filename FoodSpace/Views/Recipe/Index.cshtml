@@ -5,51 +5,70 @@
 
 <partial name="_Notification" />
 
-<body class="recipe-body">
-    
-
-    <div class="container p-3">
-        <div class="row pt-4">
-            <div>
-                <h1 style="text-align:center; font-size:80px; color:white;">
-                    Recipes
-                </h1>
-            </div>
-            <div class="text-end">
-                <a asp-controller="Recipe" asp-action="Create" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> &nbsp; Create New Recipe
-                </a>
+<body class="body">
+    <div class="recipe-body-image" style="">
+    </div>
+    <div class="container">
+        <div>
+            <div class="row pt-4">
+                <div>
+                    <h1 class="recipe-info-heading">
+                        RECIPES
+                    </h1>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div display="flex" class="recipe-card-collection" style="margin-bottom:5%;">
-        @foreach (var obj in Model)
-        {
-            <div class="recipe-card">
-                <a asp-controller="Recipe" asp-action="RecipeInfo" asp-route-id="@obj.RecipeId" class="recipe-card-click"></a>
-                <div style="display:inline-flex">
+        <div class="card-collection-container">
+            <div display="flex" class="recipe-card-collection" style="">
+                @foreach (var obj in Model)
+                {
 
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <div role="group" style="display:inline-flex; margin-left:5px; min-height:25px; margin-top:250px; position:absolute;">
-                        <a asp-controller="Recipe" asp-action="Select" asp-route-id="@obj.RecipeId" class="btn btn-success mx-1" style="border-radius:20px;"><i class="bi bi-arrow-down-circle"></i></a>
-                        <a asp-controller="Recipe" asp-action="Edit" asp-route-id="@obj.RecipeId" class="btn btn-primary mx-1" style="border-radius:20px;"><i class="bi bi-pencil"></i></a>
-                        <a asp-controller="Recipe" asp-action="Delete" asp-route-id="@obj.RecipeId" class="btn btn-danger mx-1" style="border-radius:20px;"><i class="bi bi-trash"></i></a>
+                    <div class="recipe-card">
+                        <a asp-controller="Recipe" asp-action="RecipeInfo" asp-route-id="@obj.RecipeId" class="recipe-card-click"></a>
+                        <div class="recipe-card-image">
+                            
+                        </div>
+                        <div>
+                            <div>
+                                <h2 class="p-2" style="text-decoration:solid">@obj.Name</h2>
+                                <p class="p-2" style="max-height:50%; overflow:clip;">@obj.Desc</p>
+                            </div>
+
+                        </div>
+
+
+                        
+                        <div style="display:flex; height:100%;">
+
+
+
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <div role="group" style=" padding:5px; min-height:25px; position:absolute; display:flex; align-items:end; height:100%">
+                                    <a asp-controller="Recipe" asp-action="Select" asp-route-id="@obj.RecipeId" class="btn btn-success mx-1" style="border-radius:20px;"><i class="bi bi-arrow-down-circle"></i></a>
+                                    <a asp-controller="Recipe" asp-action="Edit" asp-route-id="@obj.RecipeId" class="btn btn-primary mx-1" style="border-radius:20px;"><i class="bi bi-pencil"></i></a>
+                                    <a asp-controller="Recipe" asp-action="Delete" asp-route-id="@obj.RecipeId" class="btn btn-danger mx-1" style="border-radius:20px;"><i class="bi bi-trash"></i></a>
+
+                                </div>
+                            }
+
+
+
+
+                        </div>
+
+
 
                     </div>
-                    }
-                    
-                    <h2 class="p-2">@obj.Name</h2>
-
-
-                </div>
-
-                <p class="p-2" style="max-height:50%">@obj.Desc</p>
-
+                }
             </div>
-        }
+
+        </div>
+        
+
     </div>
+    
 
 </body>
 
