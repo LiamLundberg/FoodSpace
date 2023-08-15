@@ -1,9 +1,4 @@
 ﻿using FoodSpace.Data;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web.UI;
 using Microsoft.Identity.Web;
@@ -33,7 +28,9 @@ namespace FoodSpace
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager<SignInManager<IdentityUser>>();
 
-            services.AddControllersWithViews();
+            services.AddOptions();
+            string[] initialScopes = Configuration.GetValue<string>("DownstreamApi:Scopes")?.Split(' ');
+
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                     .AddMicrosoftIdentityWebApp(options =>
                     {
@@ -49,8 +46,15 @@ namespace FoodSpace
                             context.HandleResponse();
                             return Task.CompletedTask;
                         };
-                    });
+                    }).EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
+                      .AddMicrosoftGraph(Configuration.GetSection("DownstreamApi"))
+                      .AddInMemoryTokenCaches();
 
+            services.AddAuthorization(options =>
+            {
+                // By default, all incoming requests will be authorized according to the default policy
+                options.FallbackPolicy = options.DefaultPolicy;
+            });
 
             services.AddMvc(option =>
             {
@@ -62,6 +66,8 @@ namespace FoodSpace
                 options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
                 options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
             });
+
+
         }
 
 
@@ -77,6 +83,8 @@ namespace FoodSpace
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -87,6 +95,7 @@ namespace FoodSpace
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

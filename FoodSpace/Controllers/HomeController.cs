@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 
 namespace FoodSpace.Controllers
 {
@@ -20,6 +21,7 @@ namespace FoodSpace.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

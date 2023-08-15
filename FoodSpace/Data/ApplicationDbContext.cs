@@ -25,6 +25,8 @@ namespace FoodSpace.Data
 
         public DbSet <ItemTag> ItemTag { get; set; }
 
+        public DbSet<Profile> Profile { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -65,6 +67,8 @@ namespace FoodSpace.Data
                 .WithMany(x => x.ItemTags)
                 .HasForeignKey(x => x.TagId);
 
+            builder.Entity<Profile>()
+                .HasKey(x => new { x.ProfileID });
 
         }
     }

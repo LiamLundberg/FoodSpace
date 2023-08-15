@@ -1,28 +1,40 @@
 ﻿@model ItemTag
 
-<div class="text-center">
 
-    <h1>@Model.Item.Name</h1>
-    <form asp-controller="Item"  asp-action="AddTagPOST" method="post">
-        <input type="hidden" asp-for="ItemId" value="@Model.Item.ItemId" />
-        <div class="form-group mb-3">
+<body class="body">
+    <div class="recipe-body-image"></div>
+        <div class="container">
+            <div class="container-menu">
+                <div class="text-center">
 
-            <label asp-for="Tag.Name" class="control-label">Tag Name</label>
-            <input asp-for="Tag.Name" class="form-control" />
-            <span asp-validation-for="Tag.Name" class="text-danger"></span>
+                    <h1>@Model.Item.Name</h1>
+                    <form asp-controller="Item" asp-action="AddTagPOST" method="post">
+                        <input type="hidden" asp-for="ItemId" value="@Model.Item.ItemId" />
+                        <div class="form-group mb-3">
+
+                            <label asp-for="Tag.Name" class="control-label">Tag Name</label>
+                            <input asp-for="Tag.Name" class="form-control" />
+                            <span asp-validation-for="Tag.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+
+                            <label asp-for="Weighting" class="control-label"></label>
+                            <input asp-for="Weighting" class="form-control" />
+                            <span asp-validation-for="Weighting" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <Button type="submit" class="btn btn-primary" style="width:150px">Add To Item</Button>
+                            <a asp-controller="Item" asp-action="NewTag" class="btn btn-success" style="width:150px">New Tag</a>
+                        </div>
+                    </form>
+
+
+                </div>
+            
+
         </div>
-         <div class="form-group mb-3">
 
-            <label asp-for="Weighting" class="control-label"></label>
-            <input asp-for="Weighting" class="form-control" />
-            <span asp-validation-for="Weighting" class="text-danger"></span>
-       </div>
+    </div>
 
-        <div class="form-group mb-3">
-            <Button type="submit" class="btn btn-primary" style="width:150px">Add To Item</Button>
-            <a asp-controller="Item" asp-action="NewTag" class="btn btn-success" style="width:150px">New Tag</a>
-        </div>
-     </form>
-
-
-</div>
+</body>

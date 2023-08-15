@@ -1,19 +1,30 @@
 ﻿@model FoodSpace.Data.SearchCriteria
 
-<div class="text-center">
+<body class="body">
+    <div class="recipe-body-image" style="">
+    </div>
+    <div class="container">
+        <div class="container-blank">
 
-    <form asp-controller="Item"  asp-action="SearchItem" method="post">
-        <div class="form-group mb-3">
+            <div class="text-center" style="">
 
-            <label asp-for="criteria" class="control-label" style="font-size:80px;"></label>
-            <input asp-for="criteria" class="form-control" />
-            <span asp-validation-for="criteria" class="text-danger"></span>
+                <form asp-controller="Item" asp-action="SearchItem" method="post">
+                    <div class="form-group mb-3">
+
+                        <label asp-for="criteria" class="control-label" style="font-size:80px;">Import</label>
+                        <input asp-for="criteria" class="form-control" />
+                        <span asp-validation-for="criteria" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <Button type="submit" class="btn btn-primary" style="width:150px">Search</Button>
+                    </div>
+                </form>
         </div>
+             
 
-        <div class="form-group mb-3">
-            <Button type="submit" class="btn btn-primary" style="width:150px">Search</Button>
+
         </div>
-     </form>
+    </div>
+</body>
 
-
-</div>

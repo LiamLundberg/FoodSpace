@@ -1,9 +1,60 @@
 ﻿@using Microsoft.AspNetCore.Authentication.AzureAD.UI
 @using Microsoft.Extensions.Options
+@using Microsoft.Graph
+@using Microsoft.Graph.Models;
+@using Microsoft.Identity.Web
+@using Azure.Identity;
+@using Microsoft.Kiota.Abstractions.Authentication;
+@using Azure.Core;
+@using Microsoft.AspNetCore.Identity;
 
+@inject GraphServiceClient GraphServiceClient
+@inject ITokenAcquisition TokenAcquisition
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @inject IOptionsMonitor<AzureADOptions> AzureADOptions
+
+@{
+    /*
+    var displayName = "Default UserName";
+
+    if (User.Identity.IsAuthenticated)
+    {
+        var scopes = new[] { "User.ReadWrite" };
+
+        // Values from app registration
+        var clientId = "0f84a4dd-b5e5-4ba1-a241-f77c0fddb427";
+        var tenantId = "30cf5c13-a8d3-40fa-a22f-7d7b92e71f22";
+
+        // using Azure.Identity;
+        var options = new InteractiveBrowserCredentialOptions
+                {
+                    TenantId = tenantId,
+                    ClientId = clientId,
+
+                    AuthorityHost = AzureAuthorityHosts.AzurePublicCloud,
+                    RedirectUri = new Uri("http://localhost:5000/signin-oidc"),
+
+
+                };
+
+
+        var interactiveCredential = new InteractiveBrowserCredential(options);
+        var graphClient = new GraphServiceClient(interactiveCredential, scopes);
+        try
+        {
+            
+            var result = await graphClient.Me.GetAsync();
+            displayName = result.DisplayName;
+        }
+        catch(Azure.Identity.AuthenticationFailedException e)
+        {
+            Console.WriteLine("ERROR MESSAGE: " + e.Message);
+        }*/
+
+
+    }
+
 
 <ul class="navbar-auth">
     @if (User.Identity.IsAuthenticated)
@@ -12,11 +63,10 @@
             <a class="navbar-auth-text" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a>
         </li>
         <li class="navbar-auth-text">
-                <form id="logoutForm" method="post" asp-controller="Profile" asp-action="Logout" asp-route-returnUrl="/">
+            <form id="logoutForm" method="post" asp-controller="Profile" asp-action="Logout" asp-route-returnUrl="/">
                 <button type="submit" class="navbar-auth-text">Logout</button>
-                </form>
+            </form>
         </li>
-
     }
     else
     {
@@ -24,5 +74,6 @@
             <a class="navbar-auth-text" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="Signin">Login</a>
         </li>
     }
-    
 </ul>
+
+

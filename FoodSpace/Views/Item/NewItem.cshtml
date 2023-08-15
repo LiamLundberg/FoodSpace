@@ -2,75 +2,88 @@
 
 <partial name="_Notification" />
 
-
-<div class="container p-3">
-    <div class="row pt-4">
-        <div>
-            <h1 style="text-align:center; font-size:80px;">
-                Import Item
-            </h1>
-        </div>
-        <div class="text-end">
-            <a asp-controller="Item" asp-action="Create" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> &nbsp; Create New Item
-            </a>
-        </div>
+<body class="body">
+    <div class="recipe-body-image" style="">
     </div>
-</div>
 
-<div class="table-background">
-    <table class="table table-bordered" style="width:100%; table-layout:auto ;">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Protein (Grams)
-            </th>
-            <th>
-                Fat (Grams)
-            </th>
-            <th>
-                Carbs (Grams)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="container">
+        <div class="container-blank">
+            <div class="row pt-4">
+                <div>
+                    <h1 style="text-align:center; font-size:80px;">
+                        Import Item
+                    </h1>
+                </div>
+                <div class="text-end">
+                    <a asp-controller="Item" asp-action="Create" class="btn">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Create New Item
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-background">
+                <table class="table table-bordered" style="width:100%; table-layout:auto ;">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Protein (Grams)
+                            </th>
+                            <th>
+                                Fat (Grams)
+                            </th>
+                            <th>
+                                Carbs (Grams)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var obj in Model.Foods)
+                        {
+                            <tr>
+                                <td>
+                                    @obj.description
+                                </td>
+                                @foreach (var objItem in obj.foodNutrients)
+                                {
+                                    if (objItem.nutrientName == "Protein")
+                                    {
+                                        <td>
+                                            @objItem.value
+                                        </td>
+                                    }
+                                    if (objItem.nutrientName == "Total lipid (fat)")
+                                    {
+                                        <td>
+                                            @objItem.value
+                                        </td>
+                                    }
+                                    if (objItem.nutrientName == "Carbohydrate, by difference")
+                                    {
+                                        <td>
+                                            @objItem.value
+                                        </td>
+                                    }
+
+                                }
+                                <td>
+                                    <a asp-controller="Item" asp-action="Import" asp-route-fdcID="@obj.fdcID" class="btn btn-secondary" style="width:150px">Import</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
         
-        @foreach (var obj in Model.Foods)
-        {
-            <tr>
-                <td>
-                    @obj.description
-                </td>
-                @foreach (var objItem in obj.foodNutrients)
-                {
-                    if(objItem.nutrientName == "Protein")
-                    {
-                        <td>
-                            @objItem.value
-                        </td>
-                    }
-                    if (objItem.nutrientName == "Total lipid (fat)")
-                    {
-                        <td>
-                            @objItem.value
-                        </td>
-                    }
-                    if (objItem.nutrientName == "Carbohydrate, by difference") 
-                   {
-                        <td>
-                            @objItem.value
-                        </td>
-                    }
-                    
-                }
-                    <td>
-                        <a asp-controller="Item" asp-action="Import" asp-route-fdcID="@obj.fdcID" class="btn btn-secondary" style="width:150px">Import</a>
-                    </td>
-            </tr>
-        }
-    </tbody>
-</table>
-</div>
+
+    </div>
+
+    
+
+</body>
+
